@@ -120,7 +120,7 @@ AUI.add(
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
 							startTime: startDate.getTime(),
-							titleMap: instance.getLocalizationMap(schedulerEvent.get('content'))
+							titleMap: instance.getLocalizationMap(Liferay.Util.unescapeHTML(schedulerEvent.get('content')))
 						}
 					},
 					{
@@ -692,7 +692,7 @@ AUI.add(
 							secondReminderType: schedulerEvent.get('secondReminderType'),
 							startTime: startDate.getTime(),
 							status: schedulerEvent.get('status'),
-							titleMap: instance.getLocalizationMap(schedulerEvent.get('content')),
+							titleMap: instance.getLocalizationMap(Liferay.Util.unescapeHTML(schedulerEvent.get('content'))),
 							userId: USER_ID
 						}
 					},
@@ -753,7 +753,7 @@ AUI.add(
 							secondReminderType: schedulerEvent.get('secondReminderType'),
 							startTime: instance.toUTC(schedulerEvent.get('startDate')).getTime(),
 							status: schedulerEvent.get('status'),
-							titleMap: instance.getLocalizationMap(schedulerEvent.get('content')),
+							titleMap: instance.getLocalizationMap(Liferay.Util.unescapeHTML(schedulerEvent.get('content'))),
 							userId: USER_ID
 						}
 					},
@@ -844,6 +844,16 @@ AUI.add(
 					calendarId: {
 						setter: toInt,
 						value: 0
+					},
+
+					content: {
+						getter: function(val) {
+							if (val) {
+								val = Liferay.Util.escapeHTML(val);
+							}
+
+							return val;
+						}
 					},
 
 					description: {
@@ -1001,7 +1011,7 @@ AUI.add(
 
 						var node = instance.get('node');
 
-						node.attr('data-endDate', instance._formatDate(val, '%d-%m-%y %H:%M'));
+						node.attr('data-endDate', instance._formatDate(val, '%m-%d-%Y %l:%M %p'));
 					},
 
 					_uiSetLoading: function(val) {
@@ -1015,7 +1025,7 @@ AUI.add(
 
 						var node = instance.get('node');
 
-						node.attr('data-startDate', instance._formatDate(val, '%d-%m-%y %H:%M'));
+						node.attr('data-startDate', instance._formatDate(val, '%m-%d-%Y %l:%M %p'));
 					},
 
 					_uiSetStatus: function(val) {
@@ -1370,7 +1380,7 @@ AUI.add(
 										function() {
 											CalendarUtil.updateEventInstance(schedulerEvent, false);
 
-											this.close();
+											this.hide();
 										},
 										function() {
 											CalendarUtil.updateEventInstance(
@@ -1381,7 +1391,7 @@ AUI.add(
 												}
 											);
 
-											this.close();
+											this.hide();
 										},
 										function() {
 											CalendarUtil.getEvent(
@@ -1433,12 +1443,12 @@ AUI.add(
 												}
 											);
 
-											this.close();
+											this.hide();
 										},
 										function() {
 											instance.load();
 
-											this.close();
+											this.hide();
 										}
 									);
 								}

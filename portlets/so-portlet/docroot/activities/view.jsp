@@ -120,7 +120,7 @@ portletURL.setParameter("tabs1", tabs1);
 		}
 	);
 
-	activities.delegate(
+	socialActivities.delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;
@@ -158,7 +158,7 @@ portletURL.setParameter("tabs1", tabs1);
 								}
 							}
 						},
-						dataType: 'json',
+						dataType: 'json'
 					}
 				);
 			}
@@ -166,7 +166,7 @@ portletURL.setParameter("tabs1", tabs1);
 		'.view-comments a'
 	);
 
-	activities.delegate(
+	socialActivities.delegate(
 		'click',
 		function(event) {
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext,"are-you-sure-you-want-to-delete-the-selected-entry") %>')) {
@@ -232,7 +232,7 @@ portletURL.setParameter("tabs1", tabs1);
 		'.comment-entry .delete-comment a'
 	);
 
-	activities.delegate(
+	socialActivities.delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;
@@ -319,7 +319,7 @@ portletURL.setParameter("tabs1", tabs1);
 		'.comment-entry .edit-comment a'
 	);
 
-	activities.delegate(
+	socialActivities.delegate(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;
@@ -345,11 +345,22 @@ portletURL.setParameter("tabs1", tabs1);
 		'.repost a'
 	);
 
-	activities.delegate(
+	socialActivities.delegate(
 		'click',
 		function(event) {
 			Liferay.SO.Activities.toggleEntry(event, '<portlet:namespace />');
 		},
 		'.toggle-entry'
+	);
+
+	Liferay.on(
+		'sessionExpired',
+		function(event) {
+			var reload = function() {
+				window.location.reload();
+			};
+
+			loadNewContent = reload;
+		}
 	);
 </aui:script>

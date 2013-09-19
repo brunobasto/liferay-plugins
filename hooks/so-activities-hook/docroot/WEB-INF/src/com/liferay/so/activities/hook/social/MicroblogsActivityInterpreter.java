@@ -15,6 +15,7 @@
 package com.liferay.so.activities.hook.social;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
+import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
 import com.liferay.microblogs.util.MicroblogsUtil;
@@ -31,6 +32,7 @@ import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivitySet;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivitySetLocalServiceUtil;
+import com.liferay.so.activities.util.SocialActivityKeyConstants;
 
 /**
  * @author Matthew Kong
@@ -62,7 +64,9 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 			SocialActivitySet activitySet =
 				SocialActivitySetLocalServiceUtil.addActivitySet(activityId);
 
-			if (activity.getType() == _ACTIVITY_KEY_REPLY_ENTRY) {
+			if (activity.getType() ==
+					SocialActivityKeyConstants.MICROBLOGS_REPLY_ENTRY) {
+
 				MicroblogsEntry microblogsEntry =
 					MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
 						activity.getClassPK());
@@ -88,7 +92,9 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 			SocialActivity activity =
 				SocialActivityLocalServiceUtil.getActivity(activityId);
 
-			if (activity.getType() == _ACTIVITY_KEY_REPLY_ENTRY) {
+			if (activity.getType() ==
+					SocialActivityKeyConstants.MICROBLOGS_REPLY_ENTRY) {
+
 				MicroblogsEntry microblogsEntry =
 					MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
 						activity.getClassPK());
@@ -118,7 +124,7 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 			long classPK, int type, ServiceContext serviceContext)
 		throws Exception {
 
-		if (type == _ACTIVITY_KEY_ADD_ENTRY) {
+		if (type == SocialActivityKeyConstants.MICROBLOGS_ADD_ENTRY) {
 			return StringPool.BLANK;
 		}
 
@@ -127,6 +133,16 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 
 		if (microblogsEntry == null) {
 			return StringPool.BLANK;
+		}
+
+		if (microblogsEntry.getReceiverMicroblogsEntryId() > 0) {
+			microblogsEntry =
+				MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+					microblogsEntry.getReceiverMicroblogsEntryId());
+
+			if (microblogsEntry == null) {
+				return StringPool.BLANK;
+			}
 		}
 
 		StringBundler sb = new StringBundler(12);
@@ -154,10 +170,10 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 			sb.append(user.getPortraitURL(serviceContext.getThemeDisplay()));
 		}
 
-		sb.append("\"/></a></span></div>");
+		sb.append("\"/></a></span></div><span class=\"microblog-content\">");
 		sb.append(
 			MicroblogsUtil.getTaggedContent(microblogsEntry, serviceContext));
-		sb.append("</div></div>");
+		sb.append("</span></div></div>");
 
 		return sb.toString();
 	}
@@ -215,7 +231,7 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 				activitySetId, groupId, userId, displayDate, serviceContext));
 		sb.append("<div class=\"activity-action\">");
 
-		if (activityType == _ACTIVITY_KEY_REPLY_ENTRY) {
+		if (activityType == SocialActivityKeyConstants.MICROBLOGS_REPLY_ENTRY) {
 			sb.append(
 				serviceContext.translate("commented-on-a-microblog-entry"));
 		}
@@ -227,17 +243,22 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 				return StringPool.BLANK;
 			}
 
-			if (activityType == _ACTIVITY_KEY_ADD_ENTRY) {
+			if (activityType ==
+					SocialActivityKeyConstants.MICROBLOGS_ADD_ENTRY) {
+
 				sb.append(
 					MicroblogsUtil.getTaggedContent(
 						microblogsEntry, serviceContext));
 			}
-			else if (activityType == _ACTIVITY_KEY_REPOST_ENTRY) {
+			else if (activityType ==
+						SocialActivityKeyConstants.MICROBLOGS_REPOST_ENTRY) {
+
 				sb.append(
 					serviceContext.translate(
 						"reposted-a-microblog-entry-from-x",
 						getUserName(
-							microblogsEntry.getUserId(), serviceContext)));
+							microblogsEntry.getReceiverUserId(),
+							serviceContext)));
 			}
 			else {
 				return StringPool.BLANK;
@@ -282,27 +303,23 @@ public class MicroblogsActivityInterpreter extends SOSocialActivityInterpreter {
 			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(
 				activity.getClassPK());
 
+		if (microblogsEntry.getType() == MicroblogsEntryConstants.TYPE_REPLY) {
+			MicroblogsEntry receiverMicroblogsEntry =
+				MicroblogsEntryLocalServiceUtil.fetchMicroblogsEntry(
+					microblogsEntry.getReceiverMicroblogsEntryId());
+
+			if ((receiverMicroblogsEntry == null) ||
+				!MicroblogsEntryPermission.contains(
+					permissionChecker, receiverMicroblogsEntry,
+					ActionKeys.VIEW)) {
+
+				return false;
+			}
+		}
+
 		return MicroblogsEntryPermission.contains(
 			permissionChecker, microblogsEntry, ActionKeys.VIEW);
 	}
-
-	/**
-	 * {@link
-	 * com.liferay.microblogs.microblogs.social.MicroblogsActivityKeys#ADD_ENTRY}
-	 */
-	private static final int _ACTIVITY_KEY_ADD_ENTRY = 1;
-
-	/**
-	 * {@link
-	 * com.liferay.microblogs.microblogs.social.MicroblogsActivityKeys#REPLY_ENTRY}
-	 */
-	private static final int _ACTIVITY_KEY_REPLY_ENTRY = 3;
-
-	/**
-	 * {@link
-	 * com.liferay.microblogs.microblogs.social.MicroblogsActivityKeys#REPOST_ENTRY}
-	 */
-	private static final int _ACTIVITY_KEY_REPOST_ENTRY = 2;
 
 	private static final String[] _CLASS_NAMES =
 		{MicroblogsEntry.class.getName()};
