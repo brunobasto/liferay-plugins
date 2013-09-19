@@ -293,7 +293,7 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 
 .portlet-column {
 	border: solid $defaultBorderColor;
-	border-width: 0 1px;
+	border-width: 0 1px 0 0;
 	margin: 0 0 0 -1px;
 
 	&, .portlet-column-content {
@@ -339,7 +339,6 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: pre;
-			width: 87%;
 
 			&:hover {
 				color: $blue;
@@ -409,20 +408,33 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 	}
 
 	.avatar {
-		background: none 50% 50% no-repeat;
-		background-size: cover;
 		display: inline-block;
 		margin: -0.62em 0.5em -0.55em -0.86em;
-		overflow: hidden;
 		vertical-align: middle;
 
 		&, img {
 			height: 55px;
 			width: 55px;
 		}
+	}
+}
+
+#banner, #navigation {
+	.avatar {
+		background: none 50% 50% no-repeat;
+		background-size: cover;
+		overflow: hidden;
 
 		img {
 			visibility: hidden;
+		}
+	}
+}
+
+.ie {
+	#banner, #navigation {
+		.avatar img {
+			visibility: visible;
 		}
 	}
 }
@@ -464,10 +476,8 @@ input.aui-form-validator-error, textarea.aui-form-validator-error, select.aui-fo
 		}
 	}
 
-	&.focus {
-		.search-controls {
-			display: block;
-		}
+	&.focus .search-controls {
+		display: block;
 	}
 }
 
@@ -480,14 +490,11 @@ div#navigation {
 
 	.avatar {
 		display: block;
-		height: 155px;
 		overflow: hidden;
 		position: relative;
-		width: 155px;
 
-		img {
-			height: auto;
-			min-height: 155px;
+		&, img {
+			height: 155px;
 			width: 155px;
 		}
 
@@ -498,10 +505,8 @@ div#navigation {
 			visibility: hidden;
 		}
 
-		&:hover {
-			.edit-portrait {
-				visibility: visible;
-			}
+		&:hover .edit-portrait {
+			visibility: visible;
 		}
 	}
 
@@ -579,6 +584,10 @@ div#navigation {
 	width: 100%;
 
 	@include box-shadow(-4px 0 15px -7px rgba(0,0,0, 0.6));
+}
+
+.aui-dialog-iframe-popup #main-content {
+	float: none;
 }
 
 .aui-tabview-list {
@@ -1290,14 +1299,6 @@ div#navigation {
 		margin: 0.5em 0 1em;
 		width: 110px;
 	}
-
-	.user-portrait {
-		left: 65px;
-	}
-
-	.activity-data {
-		margin-left: 110px;
-	}
 }
 
 /* ---------- Blogs ---------- */
@@ -1697,12 +1698,14 @@ div#navigation {
 		border-bottom-width: 0;
 	}
 
-	.contacts-profile .lfr-contact-grid-item {
-		padding-top: 20px;
-	}
+	.contacts-profile {
+		.lfr-contact-grid-item {
+			padding-top: 20px;
+		}
 
-	.contacts-profile .user-information-column-1 {
-		float: none;
+		.user-information-column-1 {
+			float: none;
+		}
 	}
 
 	.lfr-app-column-view .contacts-profile .lfr-contact-grid-item {
