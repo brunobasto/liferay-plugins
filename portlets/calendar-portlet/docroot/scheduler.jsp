@@ -67,6 +67,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		window.<portlet:namespace />monthView = new A.SchedulerMonthView(
 			{
 				height: 700,
+				isoTime: <%= isoTimeFormat %>,
 				readOnly: <%= readOnly %>
 			}
 		);
@@ -76,6 +77,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		window.<portlet:namespace />agendaView = new A.SchedulerAgendaView(
 			{
 				height: 700,
+				isoTime: <%= isoTimeFormat %>,
 				readOnly: <%= readOnly %>,
 				strings: {
 					noEvents: '<liferay-ui:message key="no-events" />'
@@ -143,4 +145,48 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			]
 		}
 	);
+
+	<c:if test="<%= readOnly || (userDefaultCalendar == null) %>">
+		A.one('.scheduler-view-content').delegate(
+			'click',
+			function(event) {
+				var instance = this;
+
+				var schedulerEvent = event.currentTarget.getData('scheduler-event');
+
+				var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+
+				var permissions = calendar.get('permissions');
+
+				var scheduler = schedulerEvent.get('scheduler');
+
+				var data = {
+					calendarBookingId: schedulerEvent.get('calendarBookingId')
+				};
+
+				var viewCalendarBookingURL = decodeURIComponent('<%= HtmlUtil.escapeJS(viewCalendarBookingURL) %>');
+
+				if (permissions.VIEW_BOOKING_DETAILS) {
+					Liferay.Util.openWindow(
+						{
+							dialog: {
+								after: {
+									destroy: function(event) {
+										scheduler.load();
+									}
+								},
+								destroyOnHide: true,
+								modal: true
+							},
+							refreshWindow: window,
+							title: Liferay.Language.get('view-calendar-booking-details'),
+							uri: A.Lang.sub(viewCalendarBookingURL, data)
+						}
+					);
+				}
+			},
+			'.scheduler-event'
+		);
+	</c:if>
+
 </aui:script>
