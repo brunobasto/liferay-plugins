@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -84,8 +85,8 @@ public class CalendarBookingStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			calendarBookingElement,
-			ExportImportPathUtil.getModelPath(calendarBooking), calendarBooking,
-			CalendarPortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(calendarBooking),
+			calendarBooking);
 	}
 
 	@Override
@@ -142,7 +143,7 @@ public class CalendarBookingStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			calendarBooking, CalendarPortletDataHandler.NAMESPACE);
+			calendarBooking);
 
 		CalendarBooking importedCalendarBooking = null;
 
@@ -207,8 +208,33 @@ public class CalendarBookingStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			calendarBooking, importedCalendarBooking,
-			CalendarPortletDataHandler.NAMESPACE);
+			calendarBooking, importedCalendarBooking);
+	}
+
+	@Override
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext,
+			CalendarBooking calendarBooking)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(
+			calendarBooking.getUserUuid());
+
+		CalendarBooking existingBooking =
+			CalendarBookingLocalServiceUtil.fetchCalendarBooking(
+				calendarBooking.getUuid(),
+				portletDataContext.getScopeGroupId());
+
+		if ((existingBooking == null) || !existingBooking.isInTrash()) {
+			return;
+		}
+
+		TrashHandler trashHandler = existingBooking.getTrashHandler();
+
+		if (trashHandler.isRestorable(existingBooking.getCalendarBookingId())) {
+			trashHandler.restoreTrashEntry(
+				userId, existingBooking.getCalendarBookingId());
+		}
 	}
 
 }
