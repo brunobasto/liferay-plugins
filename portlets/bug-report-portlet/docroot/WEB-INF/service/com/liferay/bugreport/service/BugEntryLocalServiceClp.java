@@ -31,6 +31,36 @@ public class BugEntryLocalServiceClp implements BugEntryLocalService {
 		_methodName1 = "setBeanIdentifier";
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
+
+		_methodName3 = "countBugEntriesLast24hours";
+
+		_methodParameterTypes3 = new String[] {  };
+
+		_methodName4 = "getBugEntriesLast24hours";
+
+		_methodParameterTypes4 = new String[] { "int", "int" };
+
+		_methodName5 = "countBugEntriesLast7days";
+
+		_methodParameterTypes5 = new String[] {  };
+
+		_methodName6 = "getBugEntriesLast7days";
+
+		_methodParameterTypes6 = new String[] { "int", "int" };
+
+		_methodName7 = "countPortletsWithBugs";
+
+		_methodParameterTypes7 = new String[] {  };
+
+		_methodName8 = "countRecurrentBugEntries";
+
+		_methodParameterTypes8 = new String[] {  };
+
+		_methodName9 = "getBugEntries";
+
+		_methodParameterTypes9 = new String[] {
+				"java.util.Date", "java.util.Date", "int", "int"
+			};
 	}
 
 	@Override
@@ -83,9 +113,229 @@ public class BugEntryLocalServiceClp implements BugEntryLocalService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public long countBugEntriesLast24hours()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName3,
+					_methodParameterTypes3, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public java.util.List getBugEntriesLast24hours(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName4,
+					_methodParameterTypes4, new Object[] { start, end });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long countBugEntriesLast7days()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public java.util.List getBugEntriesLast7days(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName6,
+					_methodParameterTypes6, new Object[] { start, end });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int countPortletsWithBugs()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName7,
+					_methodParameterTypes7, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public long countRecurrentBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName8,
+					_methodParameterTypes8, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public java.util.List getBugEntries(java.util.Date startDate,
+		java.util.Date endDate, int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
+					new Object[] {
+						ClpSerializer.translateInput(startDate),
+						
+					ClpSerializer.translateInput(endDate),
+						
+					start,
+						
+					end
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof org.apache.solr.client.solrj.SolrServerException) {
+				throw (org.apache.solr.client.solrj.SolrServerException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
 	private String _methodName1;
 	private String[] _methodParameterTypes1;
+	private String _methodName3;
+	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
+	private String _methodName6;
+	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
 }

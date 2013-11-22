@@ -17,6 +17,7 @@ package com.liferay.bugreport.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.InvokableLocalService;
@@ -61,4 +62,36 @@ public interface BugEntryLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	/**
+	* NOTE FOR DEVELOPERS: Never reference this interface directly. Always use
+	* {@link com.liferay.bugreport.service.BugEntryLocalServiceUtil} to access
+	* the bug entry local service.
+	*
+	* @throws SolrServerException
+	*/
+	public long countBugEntriesLast24hours()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getBugEntriesLast24hours(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public long countBugEntriesLast7days()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getBugEntriesLast7days(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public int countPortletsWithBugs()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public long countRecurrentBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getBugEntries(java.util.Date startDate,
+		java.util.Date endDate, int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
 }
