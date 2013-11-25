@@ -70,6 +70,10 @@ public interface BugEntryLocalService extends BaseLocalService,
 	*
 	* @throws SolrServerException
 	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public org.apache.solr.common.SolrDocument getDocument(java.lang.String uid)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
 	public long countBugEntriesLast24hours()
 		throws org.apache.solr.client.solrj.SolrServerException;
 
@@ -84,14 +88,25 @@ public interface BugEntryLocalService extends BaseLocalService,
 	public java.util.List getBugEntriesLast7days(int start, int end)
 		throws org.apache.solr.client.solrj.SolrServerException;
 
-	public int countPortletsWithBugs()
+	public long countRecurrentBugEntries()
 		throws org.apache.solr.client.solrj.SolrServerException;
 
-	public long countRecurrentBugEntries()
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getRecurrentBugEntries(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public long countSingleBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getSingleBugEntries(int start, int end)
 		throws org.apache.solr.client.solrj.SolrServerException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getBugEntries(java.util.Date startDate,
 		java.util.Date endDate, int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public int countPortletsWithBugs()
 		throws org.apache.solr.client.solrj.SolrServerException;
 }

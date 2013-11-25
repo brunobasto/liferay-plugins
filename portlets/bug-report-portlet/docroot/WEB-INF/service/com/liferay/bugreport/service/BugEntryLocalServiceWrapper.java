@@ -66,6 +66,12 @@ public class BugEntryLocalServiceWrapper implements BugEntryLocalService,
 	* @throws SolrServerException
 	*/
 	@Override
+	public org.apache.solr.common.SolrDocument getDocument(java.lang.String uid)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return _bugEntryLocalService.getDocument(uid);
+	}
+
+	@Override
 	public long countBugEntriesLast24hours()
 		throws org.apache.solr.client.solrj.SolrServerException {
 		return _bugEntryLocalService.countBugEntriesLast24hours();
@@ -90,15 +96,27 @@ public class BugEntryLocalServiceWrapper implements BugEntryLocalService,
 	}
 
 	@Override
-	public int countPortletsWithBugs()
-		throws org.apache.solr.client.solrj.SolrServerException {
-		return _bugEntryLocalService.countPortletsWithBugs();
-	}
-
-	@Override
 	public long countRecurrentBugEntries()
 		throws org.apache.solr.client.solrj.SolrServerException {
 		return _bugEntryLocalService.countRecurrentBugEntries();
+	}
+
+	@Override
+	public java.util.List getRecurrentBugEntries(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return _bugEntryLocalService.getRecurrentBugEntries(start, end);
+	}
+
+	@Override
+	public long countSingleBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return _bugEntryLocalService.countSingleBugEntries();
+	}
+
+	@Override
+	public java.util.List getSingleBugEntries(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return _bugEntryLocalService.getSingleBugEntries(start, end);
 	}
 
 	@Override
@@ -107,6 +125,12 @@ public class BugEntryLocalServiceWrapper implements BugEntryLocalService,
 		throws org.apache.solr.client.solrj.SolrServerException {
 		return _bugEntryLocalService.getBugEntries(startDate, endDate, start,
 			end);
+	}
+
+	@Override
+	public int countPortletsWithBugs()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return _bugEntryLocalService.countPortletsWithBugs();
 	}
 
 	/**

@@ -14,7 +14,10 @@
 
 package com.liferay.bugreport.service.impl;
 
+import com.liferay.bugreport.service.base.BugEntryLocalServiceBaseImpl;
+
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -23,10 +26,9 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.GroupResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.params.GroupParams;
-
-import com.liferay.bugreport.service.base.BugEntryLocalServiceBaseImpl;
 
 /**
  * The implementation of the bug entry local service. <p> All custom service
@@ -43,156 +45,21 @@ import com.liferay.bugreport.service.base.BugEntryLocalServiceBaseImpl;
  */
 public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
-	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
-		"YYYY-MM-DD'T'hh:mm:ss'Z'");
-	private HttpSolrServer solr = new HttpSolrServer(
-		"http://localhost:8983/solr");
-
-	/**
-	 * NOTE FOR DEVELOPERS: Never reference this interface directly. Always use
-	 * {@link com.liferay.bugreport.service.BugEntryLocalServiceUtil} to access
-	 * the bug entry local service.
-	 *
-	 * @throws SolrServerException
-	 */
-
-
-	public long countBugEntriesLast24hours()
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryBugEntriesLast24hours());
-		query.setStart(0);
-		query.setRows(0);
-		query.setFields("portletId");
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
+	public long countBugEntriesLast7days() throws SolrServerException {
+		SolrDocumentList results = _executeQuery(
+			_buildQueryBugEntriesLast7days(), 0, 0, "portletId");
 
 		return results.getNumFound();
 	}
 
-	public List getBugEntriesLast24hours(int start, int end)
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryBugEntriesLast24hours());
-		query.setStart(start);
-		query.setRows(end);
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
-
-		return results;
-	}
-
-	public long countBugEntriesLast7days()
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryBugEntriesLast7days());
-		query.setStart(0);
-		query.setRows(0);
-		query.setFields("portletId");
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
+	public long countBugEntriesLast24hours() throws SolrServerException {
+		SolrDocumentList results =
+			_executeQuery(_buildQueryBugEntriesLast24hours(), 0, 0, "portletId");
 
 		return results.getNumFound();
 	}
 
-	public List getBugEntriesLast7days(int start, int end)
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryBugEntriesLast7days());
-		query.setStart(start);
-		query.setRows(end);
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
-
-		return results;
-	}
-
-	public long countRecurrentBugEntries()
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryRecurrentBugEntries());
-		query.setQuery("exceptionOccurrences:[2 TO *]");
-		query.setStart(0);
-		query.setRows(0);
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
-
-		return results.getNumFound();
-	}
-
-	public List getRecurrentBugEntries(int start, int end)
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryRecurrentBugEntries());
-		query.setQuery("exceptionOccurrences:[2 TO *]");
-		query.setStart(start);
-		query.setRows(end);
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
-
-		return results;
-	}
-
-	public long countSingleBugEntries()
-					throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryRecurrentBugEntries());
-		query.setQuery("exceptionOccurrences:[0 TO 1]");
-		query.setStart(0);
-		query.setRows(0);
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
-
-		return results.getNumFound();
-	}
-
-	public List getSingleBugEntries(int start, int end)
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildQueryRecurrentBugEntries());
-		query.setQuery("exceptionOccurrences:[0 TO 1]");
-		query.setStart(start);
-		query.setRows(end);
-
-		QueryResponse response = solr.query(query);
-		SolrDocumentList results = response.getResults();
-
-		return results;
-	}
-
-	public List getBugEntries(Date startDate, Date endDate, int start, int end)
-		throws SolrServerException {
-
-		SolrQuery query = new SolrQuery();
-		query.setQuery(_buildDateRangeQuery(startDate, endDate));
-		query.setStart(start);
-		query.setRows(end);
-
-		QueryResponse response = solr.query(query);
-
-		SolrDocumentList results = response.getResults();
-
-		return results;
-	}
-
-	public int countPortletsWithBugs()
-		throws SolrServerException {
-
+	public int countPortletsWithBugs() throws SolrServerException {
 		SolrQuery query = new SolrQuery();
 		query.setQuery(_buildQueryGetAllBugEntries());
 		query.setStart(0);
@@ -208,24 +75,84 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		return groupResponse.getValues().get(0).getNGroups();
 	}
 
-	private String _buildQueryBugEntriesLast24hours() {
+	public long countRecurrentBugEntries() throws SolrServerException {
+		SolrDocumentList results = _executeQuery(
+			_buildQueryRecurrentBugEntries(), 0, 0, "portletId");
 
-		return "exceptionType:* and exceptionDateTime:[NOW-24HOUR TO NOW]";
+		return results.getNumFound();
 	}
 
-	private String _buildQueryBugEntriesLast7days() {
+	public long countSingleBugEntries()
+					throws SolrServerException {
 
-		return "exceptionType:* and exceptionDateTime:[NOW-7DAY TO NOW]";
+		SolrDocumentList results = _executeQuery(
+			_buildQuerySingleBugEntries(), 0, 0, "portletId");
+
+		return results.getNumFound();
 	}
 
-	private String _buildQueryRecurrentBugEntries() {
+	public List getBugEntries(Date startDate, Date endDate, int start, int end)
+		throws SolrServerException {
 
-		return "exceptionType:* and exceptionOccurrences:[6 TO *]";
+		SolrDocumentList results = _executeQuery(
+			_buildDateRangeQuery(startDate, endDate), start, end);
+
+		return results;
 	}
 
-	private String _buildQueryGetAllBugEntries() {
+	public List getBugEntriesLast7days(int start, int end)
+		throws SolrServerException {
 
-		return "exceptionType:*";
+		SolrDocumentList results = _executeQuery(
+			_buildQueryBugEntriesLast7days(), start, end);
+
+		return results;
+	}
+
+	public List getBugEntriesLast24hours(int start, int end)
+		throws SolrServerException {
+
+		SolrDocumentList results = _executeQuery(
+			_buildQueryBugEntriesLast24hours(), start, end);
+
+		return results;
+	}
+
+	/**
+	 * NOTE FOR DEVELOPERS: Never reference this interface directly. Always use
+	 * {@link com.liferay.bugreport.service.BugEntryLocalServiceUtil} to access
+	 * the bug entry local service.
+	 *
+	 * @throws SolrServerException
+	 */
+
+	public SolrDocument getDocument(String uid) throws SolrServerException {
+
+		SolrDocumentList results = _executeQuery("uid:"+uid, 0, 1);
+
+		if (results.getNumFound() == 0) {
+			return null;
+		}
+
+		return results.get(0);
+	}
+
+	public List getRecurrentBugEntries(int start, int end)
+		throws SolrServerException {
+
+		SolrDocumentList results = _executeQuery(
+			_buildQueryRecurrentBugEntries(), start, end);
+
+		return results;
+	}
+
+	public List getSingleBugEntries(int start, int end)
+		throws SolrServerException {
+
+		SolrDocumentList results = _executeQuery(
+			_buildQuerySingleBugEntries(), start, end);
+
+		return results;
 	}
 
 	private String _buildDateRangeQuery(Date startDate, Date endDate) {
@@ -238,5 +165,51 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
 		return query.toString();
 	}
+
+	private String _buildQueryBugEntriesLast7days() {
+
+		return "exceptionType:* and exceptionDateTime:[NOW-7DAY TO NOW]";
+	}
+
+	private String _buildQueryBugEntriesLast24hours() {
+
+		return "exceptionType:* and exceptionDateTime:[NOW-24HOUR TO NOW]";
+	}
+
+	private String _buildQueryGetAllBugEntries() {
+
+		return "exceptionType:*";
+	}
+
+	private String _buildQueryRecurrentBugEntries() {
+
+		return "exceptionType:* and exceptionOccurrences:[2 TO *]";
+	}
+
+	private String _buildQuerySingleBugEntries() {
+
+		return "exceptionType:* and exceptionOccurrences:1";
+	}
+
+	private SolrDocumentList _executeQuery(
+		String queryString, int start, int end, String... fields)
+		throws SolrServerException {
+
+		SolrQuery query = new SolrQuery();
+		query.setQuery(queryString);
+		query.setStart(start);
+		query.setRows(end);
+
+		QueryResponse response = solr.query(query);
+
+		SolrDocumentList results = response.getResults();
+		return results;
+	}
+
+	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
+		"yyyy-MM-DD'T'hh:mm:ss'Z'");
+
+	private HttpSolrServer solr = new HttpSolrServer(
+		"http://localhost:8983/solr");
 
 }

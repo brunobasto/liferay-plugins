@@ -70,6 +70,12 @@ public class BugEntryLocalServiceUtil {
 	*
 	* @throws SolrServerException
 	*/
+	public static org.apache.solr.common.SolrDocument getDocument(
+		java.lang.String uid)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return getService().getDocument(uid);
+	}
+
 	public static long countBugEntriesLast24hours()
 		throws org.apache.solr.client.solrj.SolrServerException {
 		return getService().countBugEntriesLast24hours();
@@ -90,20 +96,35 @@ public class BugEntryLocalServiceUtil {
 		return getService().getBugEntriesLast7days(start, end);
 	}
 
-	public static int countPortletsWithBugs()
-		throws org.apache.solr.client.solrj.SolrServerException {
-		return getService().countPortletsWithBugs();
-	}
-
 	public static long countRecurrentBugEntries()
 		throws org.apache.solr.client.solrj.SolrServerException {
 		return getService().countRecurrentBugEntries();
+	}
+
+	public static java.util.List getRecurrentBugEntries(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return getService().getRecurrentBugEntries(start, end);
+	}
+
+	public static long countSingleBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return getService().countSingleBugEntries();
+	}
+
+	public static java.util.List getSingleBugEntries(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return getService().getSingleBugEntries(start, end);
 	}
 
 	public static java.util.List getBugEntries(java.util.Date startDate,
 		java.util.Date endDate, int start, int end)
 		throws org.apache.solr.client.solrj.SolrServerException {
 		return getService().getBugEntries(startDate, endDate, start, end);
+	}
+
+	public static int countPortletsWithBugs()
+		throws org.apache.solr.client.solrj.SolrServerException {
+		return getService().countPortletsWithBugs();
 	}
 
 	public static void clearService() {
