@@ -45,6 +45,13 @@ import org.apache.solr.common.params.GroupParams;
  */
 public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
+	public long countAllBugEntries() throws SolrServerException {
+		SolrDocumentList results = _executeQuery(
+			_buildQueryGetAllBugEntries(), 0, 0, "portletId");
+
+		return results.getNumFound();
+	}
+
 	public long countBugEntriesLast7days() throws SolrServerException {
 		SolrDocumentList results = _executeQuery(
 			_buildQueryBugEntriesLast7days(), 0, 0, "portletId");
