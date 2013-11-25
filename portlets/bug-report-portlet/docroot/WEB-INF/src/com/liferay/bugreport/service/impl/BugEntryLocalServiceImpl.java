@@ -105,7 +105,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQueryGetAllBugEntries(), 0, 0, "portletId");
+			_buildQueryGetAllBugEntries(), start, end, "portletId");
 
 		return results;
 	}
