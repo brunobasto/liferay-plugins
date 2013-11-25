@@ -63,6 +63,9 @@ public interface BugEntryLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public long countAllBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
 	public long countBugEntriesLast7days()
 		throws org.apache.solr.client.solrj.SolrServerException;
 
@@ -76,6 +79,10 @@ public interface BugEntryLocalService extends BaseLocalService,
 		throws org.apache.solr.client.solrj.SolrServerException;
 
 	public long countSingleBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getAllBugEntries(int start, int end)
 		throws org.apache.solr.client.solrj.SolrServerException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -100,6 +107,10 @@ public interface BugEntryLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public org.apache.solr.common.SolrDocument getDocument(java.lang.String uid)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<org.apache.solr.client.solrj.response.Group> getPortletsWithBugs()
 		throws org.apache.solr.client.solrj.SolrServerException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

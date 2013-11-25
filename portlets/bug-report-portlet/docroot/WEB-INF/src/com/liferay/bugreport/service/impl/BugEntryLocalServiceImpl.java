@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.Group;
 import org.apache.solr.client.solrj.response.GroupResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
@@ -85,16 +86,28 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
 	public long countRecurrentBugEntries() throws SolrServerException {
 		SolrDocumentList results = _executeQuery(
-			_buildQueryRecurrentBugEntries(), 0, 0, "portletId");
+			_buildQueryGetAllBugEntries(), "exceptionOccurrences:[2 TO *]", 0,
+			0, "portletId");
 
 		return results.getNumFound();
 	}
 
 	public long countSingleBugEntries() throws SolrServerException {
+
 		SolrDocumentList results = _executeQuery(
-			_buildQuerySingleBugEntries(), 0, 0, "portletId");
+			_buildQueryGetAllBugEntries(), "exceptionOccurrences:1", 0, 0,
+			"portletId");
 
 		return results.getNumFound();
+	}
+
+	public List getAllBugEntries(int start, int end)
+		throws SolrServerException {
+
+		SolrDocumentList results = _executeQuery(
+			_buildQueryGetAllBugEntries(), 0, 0, "portletId");
+
+		return results;
 	}
 
 	public List getBugEntries(Date startDate, Date endDate, int start, int end)
@@ -143,11 +156,28 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		return results.get(0);
 	}
 
+	public List<Group> getPortletsWithBugs() throws SolrServerException {
+		SolrQuery query = new SolrQuery();
+		query.setQuery(_buildQueryGetAllBugEntries());
+		query.setStart(0);
+		query.setRows(1000);
+		query.setFields("portletId", "displayName");
+		query.setParam(GroupParams.GROUP, Boolean.TRUE);
+		query.setParam(GroupParams.GROUP_TOTAL_COUNT, Boolean.TRUE);
+		query.setParam(GroupParams.GROUP_FIELD, "portletId", "displayName");
+
+		QueryResponse response = solr.query(query);
+		GroupResponse groupResponse = response.getGroupResponse();
+
+		return groupResponse.getValues().get(0).getValues();
+	}
+
 	public List getRecurrentBugEntries(int start, int end)
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQueryRecurrentBugEntries(), start, end);
+			_buildQueryGetAllBugEntries(), "exceptionOccurrences:[2 TO *]",
+			start, end);
 
 		return results;
 	}
@@ -156,7 +186,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQuerySingleBugEntries(), start, end);
+			_buildQueryGetAllBugEntries(), "exceptionOccurrences:1", start,
+			end);
 
 		return results;
 	}
@@ -187,22 +218,25 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		return "exceptionType:*";
 	}
 
-	private String _buildQueryRecurrentBugEntries() {
-
-		return "exceptionType:* and exceptionOccurrences:[2 TO *]";
-	}
-
-	private String _buildQuerySingleBugEntries() {
-
-		return "exceptionType:* and exceptionOccurrences:1";
-	}
-
 	private SolrDocumentList _executeQuery(
 			String queryString, int start, int end, String... fields)
 		throws SolrServerException {
 
+		return _executeQuery(queryString, null, start, end, fields);
+	}
+
+	private SolrDocumentList _executeQuery(
+			String queryString, String filter, int start, int end,
+			String... fields)
+		throws SolrServerException {
+
 		SolrQuery query = new SolrQuery();
 		query.setQuery(queryString);
+
+		if (filter != null) {
+			query.addFilterQuery(filter);
+		}
+
 		query.setStart(start);
 		query.setRows(end);
 
@@ -217,6 +251,6 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		"yyyy-MM-DD'T'hh:mm:ss'Z'");
 
 	private HttpSolrServer solr = new HttpSolrServer(
-		"http://localhost:8983/solr");
+		"http://10.0.1.27:8983/solr");
 
 }

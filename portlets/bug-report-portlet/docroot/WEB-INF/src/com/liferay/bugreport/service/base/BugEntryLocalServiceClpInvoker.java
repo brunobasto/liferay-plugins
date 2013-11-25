@@ -32,51 +32,63 @@ public class BugEntryLocalServiceClpInvoker {
 
 		_methodParameterTypes15 = new String[] { "java.lang.String" };
 
-		_methodName18 = "countBugEntriesLast7days";
+		_methodName18 = "countAllBugEntries";
 
 		_methodParameterTypes18 = new String[] {  };
 
-		_methodName19 = "countBugEntriesLast24hours";
+		_methodName19 = "countBugEntriesLast7days";
 
 		_methodParameterTypes19 = new String[] {  };
 
-		_methodName20 = "countPortletsWithBugs";
+		_methodName20 = "countBugEntriesLast24hours";
 
 		_methodParameterTypes20 = new String[] {  };
 
-		_methodName21 = "countRecurrentBugEntries";
+		_methodName21 = "countPortletsWithBugs";
 
 		_methodParameterTypes21 = new String[] {  };
 
-		_methodName22 = "countSingleBugEntries";
+		_methodName22 = "countRecurrentBugEntries";
 
 		_methodParameterTypes22 = new String[] {  };
 
-		_methodName23 = "getBugEntries";
+		_methodName23 = "countSingleBugEntries";
 
-		_methodParameterTypes23 = new String[] {
-				"java.util.Date", "java.util.Date", "int", "int"
-			};
+		_methodParameterTypes23 = new String[] {  };
 
-		_methodName24 = "getBugEntriesLast7days";
+		_methodName24 = "getAllBugEntries";
 
 		_methodParameterTypes24 = new String[] { "int", "int" };
 
-		_methodName25 = "getBugEntriesLast24hours";
+		_methodName25 = "getBugEntries";
 
-		_methodParameterTypes25 = new String[] { "int", "int" };
+		_methodParameterTypes25 = new String[] {
+				"java.util.Date", "java.util.Date", "int", "int"
+			};
 
-		_methodName26 = "getDocument";
+		_methodName26 = "getBugEntriesLast7days";
 
-		_methodParameterTypes26 = new String[] { "java.lang.String" };
+		_methodParameterTypes26 = new String[] { "int", "int" };
 
-		_methodName27 = "getRecurrentBugEntries";
+		_methodName27 = "getBugEntriesLast24hours";
 
 		_methodParameterTypes27 = new String[] { "int", "int" };
 
-		_methodName28 = "getSingleBugEntries";
+		_methodName28 = "getDocument";
 
-		_methodParameterTypes28 = new String[] { "int", "int" };
+		_methodParameterTypes28 = new String[] { "java.lang.String" };
+
+		_methodName29 = "getPortletsWithBugs";
+
+		_methodParameterTypes29 = new String[] {  };
+
+		_methodName30 = "getRecurrentBugEntries";
+
+		_methodParameterTypes30 = new String[] { "int", "int" };
+
+		_methodName31 = "getSingleBugEntries";
+
+		_methodParameterTypes31 = new String[] { "int", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -95,62 +107,78 @@ public class BugEntryLocalServiceClpInvoker {
 
 		if (_methodName18.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes18, parameterTypes)) {
-			return BugEntryLocalServiceUtil.countBugEntriesLast7days();
+			return BugEntryLocalServiceUtil.countAllBugEntries();
 		}
 
 		if (_methodName19.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes19, parameterTypes)) {
-			return BugEntryLocalServiceUtil.countBugEntriesLast24hours();
+			return BugEntryLocalServiceUtil.countBugEntriesLast7days();
 		}
 
 		if (_methodName20.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes20, parameterTypes)) {
-			return BugEntryLocalServiceUtil.countPortletsWithBugs();
+			return BugEntryLocalServiceUtil.countBugEntriesLast24hours();
 		}
 
 		if (_methodName21.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes21, parameterTypes)) {
-			return BugEntryLocalServiceUtil.countRecurrentBugEntries();
+			return BugEntryLocalServiceUtil.countPortletsWithBugs();
 		}
 
 		if (_methodName22.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes22, parameterTypes)) {
-			return BugEntryLocalServiceUtil.countSingleBugEntries();
+			return BugEntryLocalServiceUtil.countRecurrentBugEntries();
 		}
 
 		if (_methodName23.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes23, parameterTypes)) {
+			return BugEntryLocalServiceUtil.countSingleBugEntries();
+		}
+
+		if (_methodName24.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
+			return BugEntryLocalServiceUtil.getAllBugEntries(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName25.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
 			return BugEntryLocalServiceUtil.getBugEntries((java.util.Date)arguments[0],
 				(java.util.Date)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName24.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
+		if (_methodName26.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
 			return BugEntryLocalServiceUtil.getBugEntriesLast7days(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
-		if (_methodName25.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
-			return BugEntryLocalServiceUtil.getBugEntriesLast24hours(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
-		}
-
-		if (_methodName26.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes26, parameterTypes)) {
-			return BugEntryLocalServiceUtil.getDocument((java.lang.String)arguments[0]);
-		}
-
 		if (_methodName27.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes27, parameterTypes)) {
-			return BugEntryLocalServiceUtil.getRecurrentBugEntries(((Integer)arguments[0]).intValue(),
+			return BugEntryLocalServiceUtil.getBugEntriesLast24hours(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName28.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes28, parameterTypes)) {
+			return BugEntryLocalServiceUtil.getDocument((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName29.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes29, parameterTypes)) {
+			return BugEntryLocalServiceUtil.getPortletsWithBugs();
+		}
+
+		if (_methodName30.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
+			return BugEntryLocalServiceUtil.getRecurrentBugEntries(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName31.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
 			return BugEntryLocalServiceUtil.getSingleBugEntries(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
@@ -184,4 +212,10 @@ public class BugEntryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
 }
