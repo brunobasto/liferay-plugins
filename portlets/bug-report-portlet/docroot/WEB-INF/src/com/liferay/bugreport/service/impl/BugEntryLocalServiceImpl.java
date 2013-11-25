@@ -54,7 +54,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
 	public long countBugEntriesLast24hours() throws SolrServerException {
 		SolrDocumentList results =
-			_executeQuery(_buildQueryBugEntriesLast24hours(), 0, 0, "portletId");
+			_executeQuery(
+				_buildQueryBugEntriesLast24hours(), 0, 0, "portletId");
 
 		return results.getNumFound();
 	}
@@ -82,9 +83,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		return results.getNumFound();
 	}
 
-	public long countSingleBugEntries()
-					throws SolrServerException {
-
+	public long countSingleBugEntries() throws SolrServerException {
 		SolrDocumentList results = _executeQuery(
 			_buildQuerySingleBugEntries(), 0, 0, "portletId");
 
@@ -192,7 +191,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 	}
 
 	private SolrDocumentList _executeQuery(
-		String queryString, int start, int end, String... fields)
+			String queryString, int start, int end, String... fields)
 		throws SolrServerException {
 
 		SolrQuery query = new SolrQuery();
@@ -203,6 +202,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		QueryResponse response = solr.query(query);
 
 		SolrDocumentList results = response.getResults();
+
 		return results;
 	}
 
