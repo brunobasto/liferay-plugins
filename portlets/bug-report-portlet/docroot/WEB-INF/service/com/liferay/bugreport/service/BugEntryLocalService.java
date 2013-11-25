@@ -63,6 +63,34 @@ public interface BugEntryLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public long countBugEntriesLast7days()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public long countBugEntriesLast24hours()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public int countPortletsWithBugs()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public long countRecurrentBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	public long countSingleBugEntries()
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getBugEntries(java.util.Date startDate,
+		java.util.Date endDate, int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getBugEntriesLast7days(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List getBugEntriesLast24hours(int start, int end)
+		throws org.apache.solr.client.solrj.SolrServerException;
+
 	/**
 	* NOTE FOR DEVELOPERS: Never reference this interface directly. Always use
 	* {@link com.liferay.bugreport.service.BugEntryLocalServiceUtil} to access
@@ -74,39 +102,11 @@ public interface BugEntryLocalService extends BaseLocalService,
 	public org.apache.solr.common.SolrDocument getDocument(java.lang.String uid)
 		throws org.apache.solr.client.solrj.SolrServerException;
 
-	public long countBugEntriesLast24hours()
-		throws org.apache.solr.client.solrj.SolrServerException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List getBugEntriesLast24hours(int start, int end)
-		throws org.apache.solr.client.solrj.SolrServerException;
-
-	public long countBugEntriesLast7days()
-		throws org.apache.solr.client.solrj.SolrServerException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List getBugEntriesLast7days(int start, int end)
-		throws org.apache.solr.client.solrj.SolrServerException;
-
-	public long countRecurrentBugEntries()
-		throws org.apache.solr.client.solrj.SolrServerException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getRecurrentBugEntries(int start, int end)
 		throws org.apache.solr.client.solrj.SolrServerException;
 
-	public long countSingleBugEntries()
-		throws org.apache.solr.client.solrj.SolrServerException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List getSingleBugEntries(int start, int end)
-		throws org.apache.solr.client.solrj.SolrServerException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List getBugEntries(java.util.Date startDate,
-		java.util.Date endDate, int start, int end)
-		throws org.apache.solr.client.solrj.SolrServerException;
-
-	public int countPortletsWithBugs()
 		throws org.apache.solr.client.solrj.SolrServerException;
 }
