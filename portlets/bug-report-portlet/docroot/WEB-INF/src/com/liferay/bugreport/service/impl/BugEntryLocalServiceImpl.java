@@ -55,7 +55,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
 	public long countBugEntriesLast7days() throws SolrServerException {
 		SolrDocumentList results = _executeQuery(
-			_buildQueryGetAllBugEntries(),"exceptionDateTime:[NOW-7DAY TO NOW]", 0, 0, "portletId");
+			_buildQueryGetAllBugEntries(),"exceptionDateTime:[NOW-7DAY TO NOW]",
+			0, 0, "portletId");
 
 		return results.getNumFound();
 	}
@@ -63,7 +64,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 	public long countBugEntriesLast24hours() throws SolrServerException {
 		SolrDocumentList results =
 			_executeQuery(
-				_buildQueryGetAllBugEntries(), "exceptionDateTime:[NOW-24HOUR TO NOW]", 0, 0, "portletId");
+				_buildQueryGetAllBugEntries(),
+				"exceptionDateTime:[NOW-24HOUR TO NOW]", 0, 0, "portletId");
 
 		return results.getNumFound();
 	}
@@ -123,7 +125,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQueryGetAllBugEntries(), "exceptionDateTime:[NOW-7DAY TO NOW]", start, end);
+			_buildQueryGetAllBugEntries(),
+			"exceptionDateTime:[NOW-7DAY TO NOW]", start, end);
 
 		return results;
 	}
@@ -132,7 +135,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQueryGetAllBugEntries(), "exceptionDateTime:[NOW-24HOUR TO NOW]", start, end);
+			_buildQueryGetAllBugEntries(),
+			"exceptionDateTime:[NOW-24HOUR TO NOW]", start, end);
 
 		return results;
 	}
@@ -146,7 +150,6 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 	 */
 
 	public SolrDocument getDocument(String uid) throws SolrServerException {
-
 		SolrDocumentList results = _executeQuery("uid:"+uid, 0, 1);
 
 		if (results.getNumFound() == 0) {
