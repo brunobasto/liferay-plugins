@@ -55,7 +55,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
 	public long countBugEntriesLast7days() throws SolrServerException {
 		SolrDocumentList results = _executeQuery(
-			_buildQueryBugEntriesLast7days(), 0, 0, "portletId");
+			_buildQueryGetAllBugEntries(),"exceptionDateTime:[NOW-7DAY TO NOW]", 0, 0, "portletId");
 
 		return results.getNumFound();
 	}
@@ -63,7 +63,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 	public long countBugEntriesLast24hours() throws SolrServerException {
 		SolrDocumentList results =
 			_executeQuery(
-				_buildQueryBugEntriesLast24hours(), 0, 0, "portletId");
+				_buildQueryGetAllBugEntries(), "exceptionDateTime:[NOW-24HOUR TO NOW]", 0, 0, "portletId");
 
 		return results.getNumFound();
 	}
@@ -123,7 +123,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQueryBugEntriesLast7days(), start, end);
+			_buildQueryGetAllBugEntries(), "exceptionDateTime:[NOW-7DAY TO NOW]", start, end);
 
 		return results;
 	}
@@ -132,7 +132,7 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		throws SolrServerException {
 
 		SolrDocumentList results = _executeQuery(
-			_buildQueryBugEntriesLast24hours(), start, end);
+			_buildQueryGetAllBugEntries(), "exceptionDateTime:[NOW-24HOUR TO NOW]", start, end);
 
 		return results;
 	}
@@ -203,16 +203,6 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 		return query.toString();
 	}
 
-	private String _buildQueryBugEntriesLast7days() {
-
-		return "exceptionType:* and exceptionDateTime:[NOW-7DAY TO NOW]";
-	}
-
-	private String _buildQueryBugEntriesLast24hours() {
-
-		return "exceptionType:* and exceptionDateTime:[NOW-24HOUR TO NOW]";
-	}
-
 	private String _buildQueryGetAllBugEntries() {
 
 		return "exceptionType:*";
@@ -239,6 +229,8 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 
 		query.setStart(start);
 		query.setRows(end);
+
+		System.out.println(query.toString());
 
 		QueryResponse response = solr.query(query);
 
