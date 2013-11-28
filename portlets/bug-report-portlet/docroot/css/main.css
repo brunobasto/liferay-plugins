@@ -1,0 +1,53 @@
+.bug-report-portlet {
+	.bug-info-container {
+		float: left;
+		margin-bottom: 20px;
+		width: 100%;
+
+		.bug-info-wrapper {
+			float: left;
+			text-align: center;
+			width: 20%;
+
+			.bug-info {
+				margin: 0 auto;
+				padding: 0;
+				width: 120px;
+
+				.bug-info-content {
+					background-color: #FFF;
+					cursor: pointer;
+					font-size: 32px;
+					font-weight: bold;
+					padding: 20px;
+
+					&:hover {
+						color: #CCC;
+					}
+
+					&.active {
+						background-color: #F9F9F9;
+						cursor: normal;
+					}
+				}
+
+				.bug-info-header {
+					border-bottom: 1px solid #E3E3E3;
+					font-size: 12px;
+					padding: 3px;
+				}
+
+				.bug-info-footer {
+					border-top: 1px solid #E3E3E3;
+					font-size: 12px;
+					font-weight: bold;
+					padding: 3px;
+				}
+			}
+		}
+	}
+
+	.separator {
+		clear: both;
+	}
+}
