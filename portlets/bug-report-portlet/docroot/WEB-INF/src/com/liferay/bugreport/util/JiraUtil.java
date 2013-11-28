@@ -23,13 +23,12 @@ public class JiraUtil {
 		Arrays.asList("created", "description", "issuetype", "key", "project",
 		"status", "summary", "updated"));
 
-	private static final String JQL =
-		"project=\"PUBLIC - Liferay Portal Community Edition\" and text~\"?\"";
 
+	private static final String JQL =
+					"project=\"PUBLIC - Liferay Portal Community Edition\"";
 	private static SearchRestClient SEARCH_CLIENT;
 	private static JiraRestClient restClient;
 	private static JiraRestClientFactory restClientFactory;
-
 
 	static {
 		System.setProperty("jsse.enableSNIExtension", "false");
@@ -51,34 +50,34 @@ public class JiraUtil {
         return issues;
 	}
 
-	public static void main(String[] args) {
-
-		StringBuilder st = new StringBuilder();
-
-        //st.append("java.lang.UnsupportedOperationException");
-        //st.append("	at java.util.AbstractList.add(AbstractList.java:131)");
-		//st.append("	at com.liferay.portal.model.impl.LayoutTypePortletImpl.addPortletId(LayoutTypePortletImpl.java:378)");
-		//st.append("	at com.liferay.portal.model.impl.LayoutTypePortletImpl.addPortletId(LayoutTypePortletImpl.java:306)");
-		//st.append("	at com.liferay.portal.model.impl.LayoutTypePortletImpl.movePortletId(LayoutTypePortletImpl.java:499)");
-		//st.append("	at com.liferay.portal.action.UpdateLayoutAction.execute(UpdateLayoutAction.java:100)");
-		st.append("	at org.apache.struts.action.RequestProcessor.processActionPerform(RequestProcessor.java:431)");
-		st.append("	at org.apache.struts.action.RequestProcessor.process(RequestProcessor.java:236)");
-		st.append("	at com.liferay.portal.struts.PortalRequestProcessor.process(PortalRequestProcessor.java:153)");
-		st.append("	at org.apache.struts.action.ActionServlet.process(ActionServlet.java:1196)");
-		st.append("	at org.apache.struts.action.ActionServlet.doPost(ActionServlet.java:432)");
-		st.append("	at javax.servlet.http.HttpServlet.service(HttpServlet.java:637)");
-		st.append("	at com.liferay.portal.servlet.MainServlet.callParentService(MainServlet.java:600)");
-
-		List<Issue> issues = getIssues(st.toString());
-
-		for (Issue issue : issues) {
-			System.out.println(issue.getKey());
-		}
-	}
-
 	private static String _createQuery(String stackTrace) {
 
-		return JQL.replace("?", stackTrace.replace("\t", "\\t"));
+		String[] lines = stackTrace.split("(\\n|\\t)");
+
+		StringBuilder jql = new StringBuilder(JQL);
+		StringBuilder nextAnd = new StringBuilder();
+
+
+		for (String line : lines) {
+
+			String trim = line.trim();
+			if(!trim.isEmpty()) {
+				nextAnd.append(" and text~\"");
+				nextAnd.append("\\\"");
+				nextAnd.append(trim);
+				nextAnd.append("\\\"");
+				nextAnd.append("\"");
+
+				if(jql.length() + nextAnd.length() <= 2001) {
+					jql.append(nextAnd);
+				}else {
+					nextAnd.delete(0, nextAnd.length()-1);
+					break;
+				}
+			}
+		}
+
+		return jql.toString();
 	}
 
 	private static SearchRestClient _getSearchClient() {
