@@ -26,6 +26,11 @@
 			</analyzer>
 		</fieldType>
 		<fieldType class="solr.TextField" name="text" positionIncrementGap="100">
+
+			<analyzer>
+			  <tokenizer class="solr.PatternTokenizerFactory" pattern="\+|-|\|\||\!|\(|\)|\{|\}|\[|\]|\^|~|\*|\?|:|\\" />
+			</analyzer>
+
 			<analyzer type="index">
 				<tokenizer class="solr.WhitespaceTokenizerFactory" />
 				<filter class="solr.LowerCaseFilterFactory" />
@@ -89,14 +94,25 @@
 		</fieldType>
 	</types>
 	<fields>
+		<field indexed="true" multiValued="false" name="_version_" stored="true" type="string" />
+		<field indexed="true" multiValued="true" name="spellCheckWord" stored="true" type="textSpell" />
 		<field indexed="true" name="articleId" stored="true" type="string" />
 		<field indexed="true" name="comments" stored="true" type="text" />
 		<field indexed="true" name="companyId" omitNorms="false" stored="true" type="long" />
 		<field indexed="true" name="content" stored="true" type="text" />
 		<field indexed="true" name="createDate" stored="true" type="text" />
 		<field indexed="true" name="description" stored="true" type="text" />
-		<field indexed="true" name="entryClassPK" omitNorms="false" stored="true" type="string" />
+		<field indexed="true" name="displayName" stored="true" type="string" />
+		<field indexed="true" name="duration" stored="true" type="string" />
 		<field indexed="true" name="entryClassName" omitNorms="false" stored="true" type="string" />
+		<field indexed="true" name="entryClassPK" omitNorms="false" stored="true" type="string" />
+		<field indexed="true" name="environmentProperties" stored="true" type="string" />
+		<field indexed="true" name="exceptionDateTime" stored="true" type="date" multiValued="true"/>
+		<field indexed="true" name="exceptionHash" stored="true" type="integer"/>
+		<field indexed="true" name="exceptionMessage" stored="true" type="string" />
+		<field indexed="true" name="exceptionOccurrences" stored="true" type="integer" />
+		<field indexed="true" name="exceptionStackTrace" stored="true" type="text" />
+		<field indexed="true" name="exceptionType" stored="true" type="string" />
 		<field indexed="true" name="firstName" stored="true" type="string_lowercase" />
 		<field indexed="true" name="folderId" omitNorms="false" stored="true" type="string" />
 		<field indexed="true" name="groupId" omitNorms="false" stored="true" type="string" />
@@ -106,21 +122,27 @@
 		<field indexed="true" name="lastName" stored="true" type="string_lowercase" />
 		<field indexed="true" name="leftOrganizationId" stored="true" type="slong" />
 		<field indexed="true" name="name" stored="true" type="string" />
+		<field indexed="true" name="namespace" stored="true" type="string" />
 		<field indexed="true" name="nodeId" stored="true" type="string" />
 		<field indexed="true" name="path" stored="true" type="string" />
 		<field indexed="true" name="portletId" omitNorms="false" stored="true" type="string" />
 		<field indexed="true" name="properties" stored="true" type="string" />
+		<field indexed="true" name="requestAttributes" stored="true" type="string" />
+		<field indexed="true" name="requestHeaders" stored="true" type="string" />
+		<field indexed="true" name="requestParameters" stored="true" type="string" />
+		<field indexed="true" name="requestStatus" stored="true" type="string" />
+		<field indexed="true" name="requestType" stored="true" type="string" />
 		<field indexed="true" name="rightOrganizationId" stored="true" type="slong" />
 		<field indexed="true" name="scopeGroupId" omitNorms="false" stored="true" type="string" />
+		<field indexed="true" name="sessionAttributes" stored="true" type="string" />
 		<field indexed="true" name="spellCheckWeight" stored="true" type="string" />
-		<field indexed="true" multiValued="true" name="spellCheckWord" stored="true" type="textSpell" />
 		<field indexed="true" name="title" stored="true" type="text" />
 		<field indexed="true" name="type" stored="true" type="string" />
 		<field indexed="true" name="uid" stored="true" type="string" />
 		<field indexed="true" name="url" stored="true" type="string" />
 		<field indexed="true" name="userName" stored="true" type="string" />
 		<field indexed="true" name="version" stored="true" type="string" />
-		<field indexed="true" multiValued="false" name="_version_" stored="true" type="string" />
+
 		<dynamicField indexed="true" multiValued="true" name="*CategoryNames" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="true" name="*CategoryIds" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="false" name="*_sortable" stored="true" type="string" />
