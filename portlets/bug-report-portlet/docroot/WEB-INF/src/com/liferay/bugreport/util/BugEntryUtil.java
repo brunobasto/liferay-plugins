@@ -14,6 +14,9 @@
 
 package com.liferay.bugreport.util;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -34,12 +37,15 @@ public class BugEntryUtil {
 				String.valueOf(bugEntryDates.get(bugEntryDates.size() - 1)));
 		}
 		catch (ParseException pe) {
+			_log.error("Unable to parse date", pe);
 		}
 
 		return bugEntryDate;
 	}
 
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat(
-		"yy-MM-dd'T'hh:mm:ss'Z'");
+		"E MMM dd hh:mm:ss Z yyyy");
+
+	private static Log _log = LogFactoryUtil.getLog(BugEntryUtil.class);
 
 }
