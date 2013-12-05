@@ -248,17 +248,4 @@ public class BugEntryLocalServiceImpl extends BugEntryLocalServiceBaseImpl {
 	private HttpSolrServer solr = new HttpSolrServer(
 		"http://localhost:8983/solr");
 
-	public static void main(String[] args) throws SolrServerException {
-
-		BugEntryLocalServiceImpl bug  = new BugEntryLocalServiceImpl();
-
-		System.out.println("countAllBugEntries()         "+  bug.countAllBugEntries()        );
-		System.out.println("countBugEntriesLast7days()   "+  bug.countBugEntriesLast7days()  );
-		System.out.println("countBugEntriesLast24hours() "+  bug.countBugEntriesLast24hours());
-		System.out.println("countPortletsWithBugs()      "+  bug.countPortletsWithBugs()     );
-		System.out.println("countRecurrentBugEntries()   "+  bug.countRecurrentBugEntries()  );
-		System.out.println("countSingleBugEntries()      "+  bug.countSingleBugEntries()     );
-		System.out.println(FORMAT.format(new Date()));
-	}
-
 }
