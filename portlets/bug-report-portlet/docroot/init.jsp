@@ -24,21 +24,30 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
+<%@ page import="com.atlassian.jira.rest.client.api.domain.Issue" %>
+
 <%@ page import="com.liferay.bugreport.service.BugEntryLocalServiceUtil" %><%@
 page import="com.liferay.bugreport.util.BugEntryUtil" %><%@
+page import="com.liferay.bugreport.util.JiraUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.json.JSONFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.SessionClicks" %>
 
-<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %>
 
-<%@ page import="org.apache.solr.common.SolrDocumentList" %>
+<%@ page import="org.apache.solr.common.SolrDocument" %><%@
+page import="org.apache.solr.common.SolrDocumentList" %>
 
 <portlet:defineObjects />
 

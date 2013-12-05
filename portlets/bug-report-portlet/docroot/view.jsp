@@ -24,7 +24,7 @@ String filter = GetterUtil.getString(SessionClicks.get(request, "bug-entries-por
 	<div class="bug-info-wrapper">
 		<div class="bug-info well">
 			<div class="bug-info-header">All</div>
-			<div class="<%= filter.equals("all-errors") ? "active" : StringPool.BLANK %> bug-info-content" data-filter="all-errors">1,235</div>
+			<div class="<%= filter.equals("all-errors") ? "active" : StringPool.BLANK %> bug-info-content" data-filter="all-errors"><%= BugEntryLocalServiceUtil.countAllBugEntries() %></div>
 			<div class="bug-info-footer">Exceptions</div>
 		</div>
 	</div>

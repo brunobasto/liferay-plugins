@@ -18,28 +18,24 @@
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+SolrDocument bugEntry = (SolrDocument)row.getObject();
 %>
 
-<liferay-ui:icon-menu cssClass="bug-entry-action">
+<liferay-ui:icon-menu
+	cssClass="bug-entry-action"
+	showWhenSingleIcon="<%= true %>"
+>
+
 	<liferay-portlet:renderURL var="viewURL">
-		<portlet:param name="mvcPath" value="view_bug_entry.jsp" />
-		<portlet:param name="bugEntryId" value="abc" />
+		<portlet:param name="mvcPath" value="/view_bug_entry_details.jsp" />
+		<portlet:param name="backURL" value="<%= currentURL %>" />
+		<portlet:param name="bugEntryUID" value='<%= String.valueOf(bugEntry.get("uid")) %>' />
 	</liferay-portlet:renderURL>
 
 	<liferay-ui:icon
 		image="view"
 		method="get"
 		url="<%= viewURL %>"
-	/>
-
-	<liferay-portlet:renderURL var="editURL">
-		<portlet:param name="mvcPath" value="view_bug_entry.jsp" />
-		<portlet:param name="bugEntryId" value="abc" />
-	</liferay-portlet:renderURL>
-
-	<liferay-ui:icon
-		image="edit"
-		method="get"
-		url="<%= editURL %>"
 	/>
 </liferay-ui:icon-menu>

@@ -55,7 +55,7 @@ headerNames.add("Last Occurence");
 
 		}
 		else {
-
+			results = (SolrDocumentList)BugEntryLocalServiceUtil.getAllBugEntries(searchContainer.getStart(), searchContainer.getEnd());
 		}
 
 		searchContainer.setResults(results);
@@ -67,22 +67,32 @@ headerNames.add("Last Occurence");
 		modelVar="bugEntry"
 	>
 
+		<liferay-portlet:renderURL varImpl="rowURL">
+			<portlet:param name="mvcPath" value="/view_bug_entry_details.jsp" />
+			<portlet:param name="backURL" value="<%= currentURL %>" />
+			<portlet:param name="bugEntryUID" value='<%= String.valueOf(bugEntry.get("uid")) %>' />
+		</liferay-portlet:renderURL>
+
 		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
 			name="Name"
 			value='<%= String.valueOf(bugEntry.get("exceptionMessage")) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
 			name="Portlet"
 			value='<%= String.valueOf(bugEntry.get("displayName")) %>'
 		/>
 
 		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
 			name="Occurences"
 			value='<%= String.valueOf(bugEntry.get("exceptionOccurrences")) %>'
 		/>
 
 		<liferay-ui:search-container-column-date
+			href="<%= rowURL %>"
 			name="Last Occurence"
 			value="<%= BugEntryUtil.getBugEntryDate(bugEntry) %>"
 		/>
