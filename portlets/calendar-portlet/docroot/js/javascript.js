@@ -375,6 +375,98 @@ AUI.add(
 				);
 			},
 
+			getCalendarsMenu: function(config) {
+				var instance = this;
+
+				var toggler = new A.Toggler(
+					{
+						after: {
+							expandedChange: function(event) {
+								if (event.newVal) {
+									var activeView = config.scheduler.get('activeView');
+
+									activeView._fillHeight();
+								}
+							}
+						},
+						animated: true,
+						content: config.content,
+						expanded: false,
+						header: config.header
+					}
+				);
+
+				var items = [
+					{
+						caption: Liferay.Language.get('check-availability'),
+						fn: function(event) {
+							var instance = this;
+
+							A.each(
+								CalendarUtil.availableCalendars,
+								function(item, index) {
+									item.set('visible', false);
+								}
+							);
+
+							var calendarList = instance.get('host');
+
+							calendarList.activeItem.set('visible', true);
+
+							toggler.expand();
+							instance.hide();
+
+							return false;
+						},
+						id: 'check-availability'
+					}
+				];
+
+				var calendarsMenu = {
+					items: items
+				};
+
+				if (config.invitable) {
+					items.push(
+						{
+							caption: Liferay.Language.get('remove'),
+							fn: function(event) {
+								var instance = this;
+
+								var calendarList = instance.get('host');
+
+								calendarList.remove(calendarList.activeItem);
+
+								instance.hide();
+							},
+							id: 'remove'
+						}
+					);
+
+					calendarsMenu.on = {
+						visibleChange: function(event) {
+							var instance = this;
+
+							if (event.newVal) {
+								var calendarList = instance.get('host');
+
+								var calendar = calendarList.activeItem;
+
+								var hiddenItems = [];
+
+								if (calendar.get('calendarId') === config.defaultCalendarId) {
+									hiddenItems.push('remove');
+								}
+
+								instance.set('hiddenItems', hiddenItems);
+							}
+						}
+					};
+				}
+
+				return calendarsMenu;
+			},
+
 			getDatesList: function(startDate, total) {
 				var instance = this;
 
@@ -1484,13 +1576,11 @@ AUI.add(
 					_promptSchedulerEventUpdate: function(data) {
 						var instance = this;
 
-						var schedulerEvent = data.schedulerEvent;
-
 						data.answers = {};
 
 						instance.queue = new A.AsyncQueue();
 
-						if (schedulerEvent.isRecurring()) {
+						if (data.isRecurring) {
 							instance.queue.add(
 								{
 									args: [data],
@@ -1502,8 +1592,8 @@ AUI.add(
 							);
 						}
 
-						if (schedulerEvent.isMasterBooking()) {
-							if (schedulerEvent.get('hasChildCalendarBookings')) {
+						if (data.isMaster) {
+							if (data.hasChild) {
 								instance.queue.add(
 									{
 										args: [data],
@@ -1532,7 +1622,7 @@ AUI.add(
 								args: [data],
 								autoContinue: false,
 								context: instance,
-								fn: instance._queueableQuestionResolver,
+								fn: data.resolver,
 								timeout: 0
 							}
 						);
@@ -1637,7 +1727,6 @@ AUI.add(
 						var instance = this;
 
 						var answers = data.answers;
-						var schedulerEvent = data.schedulerEvent;
 
 						var showNextQuestion = A.bind(instance.queue.run, instance.queue);
 
@@ -1645,13 +1734,11 @@ AUI.add(
 							A.soon(showNextQuestion);
 						}
 						else {
-							var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
-
 							var content = [
 								'<p class="calendar-portlet-confirmation-text">',
 								Lang.sub(
 									Liferay.Language.get('you-are-about-to-make-changes-that-will-only-effect-your-calendar-x'),
-									[LString.escapeHTML(calendar.get('name'))]
+									[LString.escapeHTML(data.calendarName)]
 								),
 								'</p>'
 							].join(STR_BLANK);
@@ -1675,10 +1762,17 @@ AUI.add(
 					_updateSchedulerEvent: function(schedulerEvent, changedAttributes) {
 						var instance = this;
 
+						var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+
 						instance._promptSchedulerEventUpdate(
 							{
+								calendarName: calendar.get('name'),
 								duration: instance._getCalendarBookingDuration(schedulerEvent),
+								hasChild: schedulerEvent.get('hasChildCalendarBookings'),
+								isRecurring: schedulerEvent.isRecurring(),
+								isMaster:  schedulerEvent.isMasterBooking(),
 								offset: instance._getCalendarBookingOffset(schedulerEvent, changedAttributes),
+								resolver: instance._queueableQuestionResolver,
 								schedulerEvent: schedulerEvent
 							}
 						);
