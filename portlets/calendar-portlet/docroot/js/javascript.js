@@ -1227,7 +1227,7 @@ AUI.add(
 						date = DateMath.add(date, DateMath.MONTH, 1);
 					}
 					else if (viewName === 'month') {
-						date = DateMath.add(date, DateMath.WEEK, 1);
+						date = DateMath.add(date, DateMath.WEEK, 2);
 					}
 
 					return CalendarUtil.toUTC(date);
