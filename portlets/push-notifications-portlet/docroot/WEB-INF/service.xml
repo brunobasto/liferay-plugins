@@ -47,7 +47,9 @@
 		<!-- Other fields -->
 
 		<column name="parentPushNotificationsEntryId" type="long" />
+		<column name="childrenPushNotificationsEntriesCount" type="int" />
 		<column name="payload" type="String" />
+		<column name="ratingsTotalScore" type="long" />
 
 		<!-- Order -->
 
@@ -57,9 +59,17 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ParentPushNotificationsEntryId" return-type="Collection">
+			<finder-column name="parentPushNotificationsEntryId" />
+		</finder>
 		<finder name="C_P" return-type="Collection">
 			<finder-column name="createTime" comparator="&gt;" />
 			<finder-column name="parentPushNotificationsEntryId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsEntry" />
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 	</entity>
 </service-builder>

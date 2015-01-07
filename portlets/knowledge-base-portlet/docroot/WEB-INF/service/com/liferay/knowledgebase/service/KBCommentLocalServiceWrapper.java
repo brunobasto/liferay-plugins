@@ -48,11 +48,19 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 	@Override
 	public com.liferay.knowledgebase.model.KBComment addKBComment(long userId,
 		long classNameId, long classPK, java.lang.String content,
-		boolean helpful,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentLocalService.addKBComment(userId, classNameId,
-			classPK, content, helpful, serviceContext);
+			classPK, content, serviceContext);
+	}
+
+	@Override
+	public com.liferay.knowledgebase.model.KBComment addKBComment(long userId,
+		long classNameId, long classPK, java.lang.String content,
+		int userRating, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentLocalService.addKBComment(userId, classNameId,
+			classPK, content, userRating, serviceContext);
 	}
 
 	/**
@@ -170,10 +178,10 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
@@ -182,11 +190,11 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	@Override
 	public long dynamicQueryCount(
@@ -275,7 +283,7 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 	@Override
 	public java.util.List<com.liferay.knowledgebase.model.KBComment> getKBComments(
 		java.lang.String className, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.knowledgebase.model.KBComment> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _kbCommentLocalService.getKBComments(className, classPK, start,
 			end, orderByComparator);
 	}
@@ -284,6 +292,13 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 	public java.util.List<com.liferay.knowledgebase.model.KBComment> getKBComments(
 		java.lang.String className, long classPK, int[] status, int start,
 		int end) {
+		return _kbCommentLocalService.getKBComments(className, classPK, status,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.knowledgebase.model.KBComment> getKBComments(
+		java.lang.String className, long classPK, int status, int start, int end) {
 		return _kbCommentLocalService.getKBComments(className, classPK, status,
 			start, end);
 	}
@@ -320,6 +335,13 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 			start, end, orderByComparator);
 	}
 
+	/**
+	* Returns all the k b comments matching the UUID and company.
+	*
+	* @param uuid the UUID of the k b comments
+	* @param companyId the primary key of the company
+	* @return the matching k b comments, or an empty list if no matches were found
+	*/
 	@Override
 	public java.util.List<com.liferay.knowledgebase.model.KBComment> getKBCommentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) {
@@ -327,6 +349,16 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 			companyId);
 	}
 
+	/**
+	* Returns a range of k b comments matching the UUID and company.
+	*
+	* @param uuid the UUID of the k b comments
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of k b comments
+	* @param end the upper bound of the range of k b comments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching k b comments, or an empty list if no matches were found
+	*/
 	@Override
 	public java.util.List<com.liferay.knowledgebase.model.KBComment> getKBCommentsByUuidAndCompanyId(
 		java.lang.String uuid, long companyId, int start, int end,
@@ -416,11 +448,21 @@ public class KBCommentLocalServiceWrapper implements KBCommentLocalService,
 	@Override
 	public com.liferay.knowledgebase.model.KBComment updateKBComment(
 		long kbCommentId, long classNameId, long classPK,
-		java.lang.String content, boolean helpful, int status,
+		java.lang.String content, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kbCommentLocalService.updateKBComment(kbCommentId, classNameId,
-			classPK, content, helpful, status, serviceContext);
+			classPK, content, status, serviceContext);
+	}
+
+	@Override
+	public com.liferay.knowledgebase.model.KBComment updateKBComment(
+		long kbCommentId, long classNameId, long classPK,
+		java.lang.String content, int userRating, int status,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _kbCommentLocalService.updateKBComment(kbCommentId, classNameId,
+			classPK, content, userRating, status, serviceContext);
 	}
 
 	@Override

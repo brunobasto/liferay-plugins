@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/admin/init.jsp" %>
+package com.liferay.marketplace.hook.upgrade;
 
-<%
-String emptyResultsMessage = "no-completed-feedback-was-found";
-int feedbackStatus = KBCommentConstants.STATUS_COMPLETED;
-String navItem = "viewCompletedFeedback";
-%>
+import com.liferay.marketplace.hook.upgrade.v1_0_1.UpgradeModule;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
-<%@ include file="/admin/view_feedback_in_state.jspf" %>
+/**
+ * @author Joan Kim
+ */
+public class UpgradeProcess_1_0_1 extends UpgradeProcess {
+
+	@Override
+	public int getThreshold() {
+		return 101;
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		upgrade(UpgradeModule.class);
+	}
+
+}

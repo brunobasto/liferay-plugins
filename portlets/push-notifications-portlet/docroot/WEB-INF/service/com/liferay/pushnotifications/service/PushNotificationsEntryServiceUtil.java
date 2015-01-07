@@ -41,6 +41,19 @@ public class PushNotificationsEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.pushnotifications.service.impl.PushNotificationsEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		long parentPushNotificationsEntryId, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPushNotificationsEntry(parentPushNotificationsEntryId,
+			payload);
+	}
+
+	public static com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addPushNotificationsEntry(payload);
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -53,7 +66,7 @@ public class PushNotificationsEntryServiceUtil {
 
 	public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsEntry> getPushNotificationsEntries(
 		long parentPushNotificationsEntryId, long lastAccessTime, int start,
-		int end) {
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getPushNotificationsEntries(parentPushNotificationsEntryId,
 			lastAccessTime, start, end);
@@ -65,15 +78,10 @@ public class PushNotificationsEntryServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void sendPushNotification(java.lang.String payload)
+	public static com.liferay.pushnotifications.model.PushNotificationsEntry likePushNotificationsEntry(
+		long pushNotificationsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(payload);
-	}
-
-	public static void sendPushNotification(long toUserId,
-		java.lang.String payload)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(toUserId, payload);
+		return getService().likePushNotificationsEntry(pushNotificationsEntryId);
 	}
 
 	/**
@@ -83,6 +91,13 @@ public class PushNotificationsEntryServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static com.liferay.pushnotifications.model.PushNotificationsEntry unlikePushNotificationsEntry(
+		long pushNotificationsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .unlikePushNotificationsEntry(pushNotificationsEntryId);
 	}
 
 	public static void clearService() {

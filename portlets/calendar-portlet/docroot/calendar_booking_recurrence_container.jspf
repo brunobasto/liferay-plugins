@@ -125,10 +125,17 @@ if (recurrence != null) {
 					<liferay-ui:message key="repeat-on" />:
 				</th>
 				<td class="calendar-portlet-recurrence-content calendar-recurrence-weekday-checkbox">
+
+					<%
+					Weekday[] weekdaysArray = Weekday.values();
+
+					Collections.rotate(Arrays.asList(weekdaysArray), -weekStartsOn);
+					%>
+
 					<aui:field-wrapper inlineField="<%= true %>" label="">
 
 						<%
-						for (Weekday weekday : Weekday.values()) {
+						for (Weekday weekday : weekdaysArray) {
 						%>
 
 							<aui:input checked="<%= weekdays.contains(weekday) %>" data-weekday='<%= LanguageUtil.get(request, "weekday." + weekday.getValue()) %>' label="<%= weekday.getValue() %>" name="<%= weekday.getValue() %>" type="checkbox" />
@@ -163,7 +170,7 @@ if (recurrence != null) {
 						<aui:select inlineField="<%= true %>" label="" name="weekday">
 
 							<%
-							for (Weekday weekday : Weekday.values()) {
+							for (Weekday weekday : weekdaysArray) {
 							%>
 
 								<aui:option label='<%= "weekday." + weekday.getValue() %>' selected="<%= weekday == positionalWeekday.getWeekday() %>" value="<%= weekday.getValue() %>" />

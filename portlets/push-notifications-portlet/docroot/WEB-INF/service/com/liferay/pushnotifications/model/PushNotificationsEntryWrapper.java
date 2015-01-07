@@ -58,7 +58,10 @@ public class PushNotificationsEntryWrapper implements PushNotificationsEntry,
 		attributes.put("createTime", getCreateTime());
 		attributes.put("parentPushNotificationsEntryId",
 			getParentPushNotificationsEntryId());
+		attributes.put("childrenPushNotificationsEntriesCount",
+			getChildrenPushNotificationsEntriesCount());
 		attributes.put("payload", getPayload());
+		attributes.put("ratingsTotalScore", getRatingsTotalScore());
 
 		return attributes;
 	}
@@ -91,10 +94,23 @@ public class PushNotificationsEntryWrapper implements PushNotificationsEntry,
 			setParentPushNotificationsEntryId(parentPushNotificationsEntryId);
 		}
 
+		Integer childrenPushNotificationsEntriesCount = (Integer)attributes.get(
+				"childrenPushNotificationsEntriesCount");
+
+		if (childrenPushNotificationsEntriesCount != null) {
+			setChildrenPushNotificationsEntriesCount(childrenPushNotificationsEntriesCount);
+		}
+
 		String payload = (String)attributes.get("payload");
 
 		if (payload != null) {
 			setPayload(payload);
+		}
+
+		Long ratingsTotalScore = (Long)attributes.get("ratingsTotalScore");
+
+		if (ratingsTotalScore != null) {
+			setRatingsTotalScore(ratingsTotalScore);
 		}
 	}
 
@@ -107,6 +123,16 @@ public class PushNotificationsEntryWrapper implements PushNotificationsEntry,
 	public int compareTo(
 		com.liferay.pushnotifications.model.PushNotificationsEntry pushNotificationsEntry) {
 		return _pushNotificationsEntry.compareTo(pushNotificationsEntry);
+	}
+
+	/**
+	* Returns the children push notifications entries count of this push notifications entry.
+	*
+	* @return the children push notifications entries count of this push notifications entry
+	*/
+	@Override
+	public int getChildrenPushNotificationsEntriesCount() {
+		return _pushNotificationsEntry.getChildrenPushNotificationsEntriesCount();
 	}
 
 	/**
@@ -170,6 +196,21 @@ public class PushNotificationsEntryWrapper implements PushNotificationsEntry,
 	}
 
 	/**
+	* Returns the ratings total score of this push notifications entry.
+	*
+	* @return the ratings total score of this push notifications entry
+	*/
+	@Override
+	public long getRatingsTotalScore() {
+		return _pushNotificationsEntry.getRatingsTotalScore();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.json.JSONObject getUser() {
+		return _pushNotificationsEntry.getUser();
+	}
+
+	/**
 	* Returns the user ID of this push notifications entry.
 	*
 	* @return the user ID of this push notifications entry
@@ -217,6 +258,17 @@ public class PushNotificationsEntryWrapper implements PushNotificationsEntry,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_pushNotificationsEntry.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the children push notifications entries count of this push notifications entry.
+	*
+	* @param childrenPushNotificationsEntriesCount the children push notifications entries count of this push notifications entry
+	*/
+	@Override
+	public void setChildrenPushNotificationsEntriesCount(
+		int childrenPushNotificationsEntriesCount) {
+		_pushNotificationsEntry.setChildrenPushNotificationsEntriesCount(childrenPushNotificationsEntriesCount);
 	}
 
 	/**
@@ -296,6 +348,22 @@ public class PushNotificationsEntryWrapper implements PushNotificationsEntry,
 	@Override
 	public void setPushNotificationsEntryId(long pushNotificationsEntryId) {
 		_pushNotificationsEntry.setPushNotificationsEntryId(pushNotificationsEntryId);
+	}
+
+	/**
+	* Sets the ratings total score of this push notifications entry.
+	*
+	* @param ratingsTotalScore the ratings total score of this push notifications entry
+	*/
+	@Override
+	public void setRatingsTotalScore(long ratingsTotalScore) {
+		_pushNotificationsEntry.setRatingsTotalScore(ratingsTotalScore);
+	}
+
+	@Override
+	public void setUser(
+		com.liferay.portal.kernel.json.JSONObject userJSONObject) {
+		_pushNotificationsEntry.setUser(userJSONObject);
 	}
 
 	/**
