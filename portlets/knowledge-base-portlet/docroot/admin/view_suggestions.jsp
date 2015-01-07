@@ -19,26 +19,26 @@
 <liferay-util:include page="/admin/top_tabs.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:success
-	key="feedbackDeleted"
-	message="feedback-deleted-successfully"
+	key="suggestionDeleted"
+	message="suggestion-deleted-successfully"
 />
 
 <liferay-ui:success
-	key="feedbackStatusUpdated"
-	message="feedback-status-updated-successfully"
+	key="suggestionStatusUpdated"
+	message="suggestion-status-updated-successfully"
 />
 
 <liferay-ui:success
-	key="feedbackSaved"
-	message="feedback-saved-successfully"
+	key="suggestionSaved"
+	message="suggestion-saved-successfully"
 />
 
 <%
-String navItem = ParamUtil.getString(request, "navItem", "viewNewFeedback");
+String navItem = ParamUtil.getString(request, "navItem", "viewNewSuggestions");
 
-KBFeedbackListDisplayContext kbFeedbackListDisplayContext = new KBFeedbackListDisplayContext(scopeGroupId, navItem);
+KBSuggestionListDisplayContext kbSuggestionListDisplayContext = new KBSuggestionListDisplayContext(scopeGroupId, navItem);
 
-request.setAttribute(WebKeys.KNOWLEDGE_BASE_KB_FEEDBACK_LIST_DISPLAY_CONTEXT, kbFeedbackListDisplayContext);
+request.setAttribute(WebKeys.KNOWLEDGE_BASE_KB_SUGGESTION_LIST_DISPLAY_CONTEXT, kbSuggestionListDisplayContext);
 %>
 
-<liferay-util:include page="/admin/common/view_feedback_by_status.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/admin/common/view_suggestions_by_status.jsp" servletContext="<%= application %>" />

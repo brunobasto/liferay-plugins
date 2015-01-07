@@ -166,10 +166,10 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
@@ -177,11 +177,11 @@ public class PushNotificationsDeviceLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -243,12 +243,6 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		return getService().getPushNotificationsDevices(start, end);
 	}
 
-	public static java.util.List<com.liferay.pushnotifications.model.PushNotificationsDevice> getPushNotificationsDevices(
-		long toUserId, java.lang.String platform, int start, int end) {
-		return getService()
-				   .getPushNotificationsDevices(toUserId, platform, start, end);
-	}
-
 	/**
 	* Returns the number of push notifications devices.
 	*
@@ -262,6 +256,18 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		return getService().invokeMethod(name, parameterTypes, arguments);
+	}
+
+	public static void sendPushNotification(long fromUserId,
+		com.liferay.portal.kernel.json.JSONObject jsonObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(fromUserId, jsonObject);
+	}
+
+	public static void sendPushNotification(long fromUserId, long toUserId,
+		com.liferay.portal.kernel.json.JSONObject jsonObject)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(fromUserId, toUserId, jsonObject);
 	}
 
 	/**
