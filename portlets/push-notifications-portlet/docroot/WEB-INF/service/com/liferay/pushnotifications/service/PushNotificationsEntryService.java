@@ -49,6 +49,15 @@ public interface PushNotificationsEntryService extends BaseService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link PushNotificationsEntryServiceUtil} to access the push notifications entry remote service. Add custom service methods to {@link com.liferay.pushnotifications.service.impl.PushNotificationsEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	@com.liferay.portal.security.ac.AccessControlled(guestAccessEnabled = true)
+	public com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		long parentPushNotificationsEntryId, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	@com.liferay.portal.security.ac.AccessControlled(guestAccessEnabled = true)
+	public com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -60,17 +69,15 @@ public interface PushNotificationsEntryService extends BaseService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.pushnotifications.model.PushNotificationsEntry> getPushNotificationsEntries(
 		long parentPushNotificationsEntryId, long lastAccessTime, int start,
-		int end);
+		int end) throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void sendPushNotification(java.lang.String payload)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void sendPushNotification(long toUserId, java.lang.String payload)
+	public com.liferay.pushnotifications.model.PushNotificationsEntry likePushNotificationsEntry(
+		long pushNotificationsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -79,4 +86,8 @@ public interface PushNotificationsEntryService extends BaseService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.pushnotifications.model.PushNotificationsEntry unlikePushNotificationsEntry(
+		long pushNotificationsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

@@ -21,7 +21,7 @@
 
 	<aui:input label="url" name="url" />
 
-	<aui:button disabled="<%= !PushNotificationsPermission.contains(permissionChecker, ActionKeys.SEND_NOTIFICATION) %>" type="submit" value="send" />
+	<aui:button disabled="<%= !PushNotificationsPermission.contains(permissionChecker, ActionKeys.ADD_ENTRY) %>" type="submit" value="send" />
 
 	<aui:button type="reset" value="reset" />
 </aui:form>
@@ -58,7 +58,7 @@
 			}
 
 			Liferay.Service(
-				'/push-notifications-portlet.pushnotificationsentry/send-push-notification',
+				'/push-notifications-portlet.pushnotificationsentry/add-push-notifications-entry',
 				{
 					payload: A.JSON.stringify(
 						{
@@ -93,7 +93,7 @@
 
 		error.hide();
 
-		if (A.Object.isEmpty(result)) {
+		if (A.Object.hasKey(result, 'pushNotificationsEntryId')) {
 			success.show();
 		}
 		else {
