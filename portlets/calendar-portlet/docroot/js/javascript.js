@@ -1614,6 +1614,47 @@ AUI.add(
 
 		Liferay.Scheduler = Scheduler;
 
+		Liferay.SchedulerDayView = A.SchedulerDayView;
+
+		Liferay.SchedulerWeekView = A.SchedulerWeekView;
+
+		var SchedulerMonthView = A.Component.create(
+			{
+				EXTENDS: A.SchedulerMonthView,
+
+				NAME: 'scheduler-month-view',
+
+				prototype: {
+					_uiSetDate: function(date) {
+						var instance = this;
+
+						var daysInMonth = DateMath.getDaysInMonth(date.getFullYear(), date.getMonth());
+						var firstWeekDay = DateMath.getDate(date.getFullYear(), date.getMonth(), 1).getDay();
+						var daysInFirstWeek = DateMath.WEEK_LENGTH - firstWeekDay;
+						var weeks = Math.ceil((daysInMonth - daysInFirstWeek) / DateMath.WEEK_LENGTH) + 1;
+
+						A.each(
+							instance.tableRows,
+							function(item, index) {
+								if (index < weeks) {
+									item.removeClass('hide');
+								}
+								else {
+									item.addClass('hide');
+								}
+							}
+						);
+
+						SchedulerMonthView.superclass._uiSetDate.apply(this, arguments);
+					}
+				}
+			}
+		);
+
+		Liferay.SchedulerMonthView = SchedulerMonthView;
+
+		Liferay.SchedulerAgendaView = A.SchedulerAgendaView;
+
 		var SchedulerEventRecorder = A.Component.create(
 			{
 				ATTRS: {
@@ -1760,54 +1801,7 @@ AUI.add(
 
 						instance.popover.headerNode.toggleClass('hide', !templateData.permissions.VIEW_BOOKING_DETAILS);
 
-						instance._syncInvitees();
-					},
-
-					_afterPopoverVisibleChange: function(event) {
-						var instance = this;
-
-						var schedulerEvent = instance.get('event');
-
-						var popoverBB = instance.popover.get('boundingBox');
-
-						popoverBB.toggleClass('calendar-portlet-event-recorder-editing', !!schedulerEvent);
-
-						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
-
-						var calendarId = defaultUserCalendar.get('calendarId');
-						var color = defaultUserCalendar.get('color');
-
-						var eventInstance = instance;
-
-						if (schedulerEvent) {
-							calendarId = schedulerEvent.get('calendarId');
-
-							var calendar = CalendarUtil.availableCalendars[calendarId];
-
-							if (calendar) {
-								color = calendar.get('color');
-
-								eventInstance = schedulerEvent;
-							}
-						}
-
-						eventInstance.set(
-							'color',
-							color,
-							{
-								silent: true
-							}
-						);
-
-						SchedulerEventRecorder.superclass._afterPopoverVisibleChange.apply(this, arguments);
-
-						var portletNamespace = instance.get('portletNamespace');
-
-						var eventRecorderCalendar = A.one('#' + portletNamespace + 'eventRecorderCalendar');
-
-						if (eventRecorderCalendar) {
-							eventRecorderCalendar.val(calendarId.toString());
-						}
+						instance._showResources();
 					},
 
 					_getFooterToolbar: function() {
@@ -2070,6 +2064,53 @@ AUI.add(
 							},
 							'#' + instance.get('portletNamespace') + 'eventRecorderCalendar'
 						);
+					},
+
+					_showResources: function() {
+						var instance = this;
+
+						var schedulerEvent = instance.get('event');
+
+						var popoverBB = instance.popover.get('boundingBox');
+
+						popoverBB.toggleClass('calendar-portlet-event-recorder-editing', !!schedulerEvent);
+
+						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
+
+						var calendarId = defaultUserCalendar.get('calendarId');
+						var color = defaultUserCalendar.get('color');
+
+						var eventInstance = instance;
+
+						if (schedulerEvent) {
+							calendarId = schedulerEvent.get('calendarId');
+
+							var calendar = CalendarUtil.availableCalendars[calendarId];
+
+							if (calendar) {
+								color = calendar.get('color');
+
+								eventInstance = schedulerEvent;
+							}
+						}
+
+						eventInstance.set(
+							'color',
+							color,
+							{
+								silent: true
+							}
+						);
+
+						var portletNamespace = instance.get('portletNamespace');
+
+						var eventRecorderCalendar = A.one('#' + portletNamespace + 'eventRecorderCalendar');
+
+						if (eventRecorderCalendar) {
+							eventRecorderCalendar.val(calendarId.toString());
+						}
+
+						instance._syncInvitees();
 					},
 
 					_syncInvitees: function() {

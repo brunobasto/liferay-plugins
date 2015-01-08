@@ -34,6 +34,21 @@ public class PushNotificationsEntryServiceWrapper
 		_pushNotificationsEntryService = pushNotificationsEntryService;
 	}
 
+	@Override
+	public com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		long parentPushNotificationsEntryId, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsEntryService.addPushNotificationsEntry(parentPushNotificationsEntryId,
+			payload);
+	}
+
+	@Override
+	public com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsEntryService.addPushNotificationsEntry(payload);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -47,7 +62,7 @@ public class PushNotificationsEntryServiceWrapper
 	@Override
 	public java.util.List<com.liferay.pushnotifications.model.PushNotificationsEntry> getPushNotificationsEntries(
 		long parentPushNotificationsEntryId, long lastAccessTime, int start,
-		int end) {
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return _pushNotificationsEntryService.getPushNotificationsEntries(parentPushNotificationsEntryId,
 			lastAccessTime, start, end);
 	}
@@ -61,15 +76,10 @@ public class PushNotificationsEntryServiceWrapper
 	}
 
 	@Override
-	public void sendPushNotification(java.lang.String payload)
+	public com.liferay.pushnotifications.model.PushNotificationsEntry likePushNotificationsEntry(
+		long pushNotificationsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_pushNotificationsEntryService.sendPushNotification(payload);
-	}
-
-	@Override
-	public void sendPushNotification(long toUserId, java.lang.String payload)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_pushNotificationsEntryService.sendPushNotification(toUserId, payload);
+		return _pushNotificationsEntryService.likePushNotificationsEntry(pushNotificationsEntryId);
 	}
 
 	/**
@@ -80,6 +90,13 @@ public class PushNotificationsEntryServiceWrapper
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_pushNotificationsEntryService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public com.liferay.pushnotifications.model.PushNotificationsEntry unlikePushNotificationsEntry(
+		long pushNotificationsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _pushNotificationsEntryService.unlikePushNotificationsEntry(pushNotificationsEntryId);
 	}
 
 	/**

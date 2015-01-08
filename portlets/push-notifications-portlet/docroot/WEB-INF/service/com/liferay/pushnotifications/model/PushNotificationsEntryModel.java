@@ -132,6 +132,21 @@ public interface PushNotificationsEntryModel extends BaseModel<PushNotifications
 		long parentPushNotificationsEntryId);
 
 	/**
+	 * Returns the children push notifications entries count of this push notifications entry.
+	 *
+	 * @return the children push notifications entries count of this push notifications entry
+	 */
+	public int getChildrenPushNotificationsEntriesCount();
+
+	/**
+	 * Sets the children push notifications entries count of this push notifications entry.
+	 *
+	 * @param childrenPushNotificationsEntriesCount the children push notifications entries count of this push notifications entry
+	 */
+	public void setChildrenPushNotificationsEntriesCount(
+		int childrenPushNotificationsEntriesCount);
+
+	/**
 	 * Returns the payload of this push notifications entry.
 	 *
 	 * @return the payload of this push notifications entry
@@ -145,6 +160,20 @@ public interface PushNotificationsEntryModel extends BaseModel<PushNotifications
 	 * @param payload the payload of this push notifications entry
 	 */
 	public void setPayload(String payload);
+
+	/**
+	 * Returns the ratings total score of this push notifications entry.
+	 *
+	 * @return the ratings total score of this push notifications entry
+	 */
+	public long getRatingsTotalScore();
+
+	/**
+	 * Sets the ratings total score of this push notifications entry.
+	 *
+	 * @param ratingsTotalScore the ratings total score of this push notifications entry
+	 */
+	public void setRatingsTotalScore(long ratingsTotalScore);
 
 	@Override
 	public boolean isNew();

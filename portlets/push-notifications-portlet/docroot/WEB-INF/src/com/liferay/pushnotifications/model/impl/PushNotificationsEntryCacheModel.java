@@ -39,7 +39,7 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{pushNotificationsEntryId=");
 		sb.append(pushNotificationsEntryId);
@@ -49,8 +49,12 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 		sb.append(createTime);
 		sb.append(", parentPushNotificationsEntryId=");
 		sb.append(parentPushNotificationsEntryId);
+		sb.append(", childrenPushNotificationsEntriesCount=");
+		sb.append(childrenPushNotificationsEntriesCount);
 		sb.append(", payload=");
 		sb.append(payload);
+		sb.append(", ratingsTotalScore=");
+		sb.append(ratingsTotalScore);
 		sb.append("}");
 
 		return sb.toString();
@@ -64,6 +68,7 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 		pushNotificationsEntryImpl.setUserId(userId);
 		pushNotificationsEntryImpl.setCreateTime(createTime);
 		pushNotificationsEntryImpl.setParentPushNotificationsEntryId(parentPushNotificationsEntryId);
+		pushNotificationsEntryImpl.setChildrenPushNotificationsEntriesCount(childrenPushNotificationsEntriesCount);
 
 		if (payload == null) {
 			pushNotificationsEntryImpl.setPayload(StringPool.BLANK);
@@ -71,6 +76,8 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 		else {
 			pushNotificationsEntryImpl.setPayload(payload);
 		}
+
+		pushNotificationsEntryImpl.setRatingsTotalScore(ratingsTotalScore);
 
 		pushNotificationsEntryImpl.resetOriginalValues();
 
@@ -83,7 +90,9 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 		userId = objectInput.readLong();
 		createTime = objectInput.readLong();
 		parentPushNotificationsEntryId = objectInput.readLong();
+		childrenPushNotificationsEntriesCount = objectInput.readInt();
 		payload = objectInput.readUTF();
+		ratingsTotalScore = objectInput.readLong();
 	}
 
 	@Override
@@ -93,6 +102,7 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createTime);
 		objectOutput.writeLong(parentPushNotificationsEntryId);
+		objectOutput.writeInt(childrenPushNotificationsEntriesCount);
 
 		if (payload == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -100,11 +110,15 @@ public class PushNotificationsEntryCacheModel implements CacheModel<PushNotifica
 		else {
 			objectOutput.writeUTF(payload);
 		}
+
+		objectOutput.writeLong(ratingsTotalScore);
 	}
 
 	public long pushNotificationsEntryId;
 	public long userId;
 	public long createTime;
 	public long parentPushNotificationsEntryId;
+	public int childrenPushNotificationsEntriesCount;
 	public String payload;
+	public long ratingsTotalScore;
 }

@@ -17,9 +17,9 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String emptyResultsMessage = "no-in-progress-feedback-was-found";
-int feedbackStatus = KBCommentConstants.STATUS_IN_PROGRESS;
-String navItem = "viewInProgressFeedback";
+String emptyResultsMessage = "no-new-suggestion-was-found";
+String navItem = "viewNewSuggestions";
+int suggestionStatus = KBCommentConstants.STATUS_NEW;
 %>
 
-<%@ include file="/admin/view_feedback_in_state.jspf" %>
+<%@ include file="/admin/view_suggestions_in_state.jspf" %>

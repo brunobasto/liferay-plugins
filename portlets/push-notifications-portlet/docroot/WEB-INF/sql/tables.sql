@@ -11,5 +11,7 @@ create table PushNotificationsEntry (
 	userId LONG,
 	createTime LONG,
 	parentPushNotificationsEntryId LONG,
-	payload STRING null
+	childrenPushNotificationsEntriesCount INTEGER,
+	payload STRING null,
+	ratingsTotalScore LONG
 );
