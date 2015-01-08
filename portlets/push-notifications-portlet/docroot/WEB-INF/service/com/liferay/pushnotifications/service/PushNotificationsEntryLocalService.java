@@ -61,7 +61,12 @@ public interface PushNotificationsEntryLocalService extends BaseLocalService,
 
 	public com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
 		long userId, long parentPushNotificationsEntryId,
-		com.liferay.portal.kernel.json.JSONObject payloadJSONObject);
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.pushnotifications.model.PushNotificationsEntry addPushNotificationsEntry(
+		long userId, com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Creates a new push notifications entry with the primary key. Does not add the push notifications entry to the database.
@@ -148,20 +153,20 @@ public interface PushNotificationsEntryLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
+	* @return the number of rows matching the dynamic query
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
@@ -190,7 +195,7 @@ public interface PushNotificationsEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.pushnotifications.model.PushNotificationsEntry> getPushNotificationsEntries(
 		long parentPushNotificationsEntryId, long lastAccessTime, int start,
-		int end);
+		int end) throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the push notifications entries.
@@ -232,12 +237,12 @@ public interface PushNotificationsEntryLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	public void sendPushNotification(
-		com.liferay.portal.kernel.json.JSONObject jsonObject, int start, int end)
+	public com.liferay.pushnotifications.model.PushNotificationsEntry likePushNotificationsEntry(
+		long userId, long pushNotificationsEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void sendPushNotification(long toUserId,
-		com.liferay.portal.kernel.json.JSONObject jsonObject, int start, int end)
+	public void sendPushNotification(long fromUserId,
+		com.liferay.pushnotifications.model.PushNotificationsEntry pushNotificationsEntry)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
@@ -246,6 +251,14 @@ public interface PushNotificationsEntryLocalService extends BaseLocalService,
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public com.liferay.pushnotifications.model.PushNotificationsEntry unlikePushNotificationsEntry(
+		long userId, long pushNotificationsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.pushnotifications.model.PushNotificationsEntry updateChildrenPushNotificationsEntriesCount(
+		long parentPushNotificationsEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Updates the push notifications entry in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

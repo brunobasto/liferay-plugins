@@ -27,75 +27,93 @@ import java.util.Arrays;
 @ProviderType
 public class PushNotificationsEntryServiceClpInvoker {
 	public PushNotificationsEntryServiceClpInvoker() {
-		_methodName30 = "getBeanIdentifier";
+		_methodName40 = "getBeanIdentifier";
 
-		_methodParameterTypes30 = new String[] {  };
+		_methodParameterTypes40 = new String[] {  };
 
-		_methodName31 = "setBeanIdentifier";
+		_methodName41 = "setBeanIdentifier";
 
-		_methodParameterTypes31 = new String[] { "java.lang.String" };
+		_methodParameterTypes41 = new String[] { "java.lang.String" };
 
-		_methodName36 = "getPushNotificationsEntries";
+		_methodName46 = "addPushNotificationsEntry";
 
-		_methodParameterTypes36 = new String[] { "long", "long", "int", "int" };
+		_methodParameterTypes46 = new String[] { "long", "java.lang.String" };
 
-		_methodName37 = "sendPushNotification";
+		_methodName47 = "addPushNotificationsEntry";
 
-		_methodParameterTypes37 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes47 = new String[] { "java.lang.String" };
 
-		_methodName38 = "sendPushNotification";
+		_methodName48 = "getPushNotificationsEntries";
 
-		_methodParameterTypes38 = new String[] { "java.lang.String" };
+		_methodParameterTypes48 = new String[] { "long", "long", "int", "int" };
+
+		_methodName49 = "likePushNotificationsEntry";
+
+		_methodParameterTypes49 = new String[] { "long" };
+
+		_methodName50 = "unlikePushNotificationsEntry";
+
+		_methodParameterTypes50 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName30.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
+		if (_methodName40.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
 			return PushNotificationsEntryServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName31.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
 			PushNotificationsEntryServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName36.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return PushNotificationsEntryServiceUtil.addPushNotificationsEntry(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+			return PushNotificationsEntryServiceUtil.addPushNotificationsEntry((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return PushNotificationsEntryServiceUtil.getPushNotificationsEntries(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName37.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
-			PushNotificationsEntryServiceUtil.sendPushNotification(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
-
-			return null;
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+			return PushNotificationsEntryServiceUtil.likePushNotificationsEntry(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName38.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
-			PushNotificationsEntryServiceUtil.sendPushNotification((java.lang.String)arguments[0]);
-
-			return null;
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+			return PushNotificationsEntryServiceUtil.unlikePushNotificationsEntry(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName30;
-	private String[] _methodParameterTypes30;
-	private String _methodName31;
-	private String[] _methodParameterTypes31;
-	private String _methodName36;
-	private String[] _methodParameterTypes36;
-	private String _methodName37;
-	private String[] _methodParameterTypes37;
-	private String _methodName38;
-	private String[] _methodParameterTypes38;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
 }

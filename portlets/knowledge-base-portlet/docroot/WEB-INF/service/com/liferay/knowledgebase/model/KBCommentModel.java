@@ -267,25 +267,18 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	public void setContent(String content);
 
 	/**
-	 * Returns the helpful of this k b comment.
+	 * Returns the user rating of this k b comment.
 	 *
-	 * @return the helpful of this k b comment
+	 * @return the user rating of this k b comment
 	 */
-	public boolean getHelpful();
+	public int getUserRating();
 
 	/**
-	 * Returns <code>true</code> if this k b comment is helpful.
+	 * Sets the user rating of this k b comment.
 	 *
-	 * @return <code>true</code> if this k b comment is helpful; <code>false</code> otherwise
+	 * @param userRating the user rating of this k b comment
 	 */
-	public boolean isHelpful();
-
-	/**
-	 * Sets whether this k b comment is helpful.
-	 *
-	 * @param helpful the helpful of this k b comment
-	 */
-	public void setHelpful(boolean helpful);
+	public void setUserRating(int userRating);
 
 	/**
 	 * Returns the status of this k b comment.
@@ -338,19 +331,19 @@ public interface KBCommentModel extends AttachedModel, BaseModel<KBComment>,
 	public Object clone();
 
 	@Override
-	public int compareTo(KBComment kbComment);
+	public int compareTo(com.liferay.knowledgebase.model.KBComment kbComment);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<KBComment> toCacheModel();
+	public CacheModel<com.liferay.knowledgebase.model.KBComment> toCacheModel();
 
 	@Override
-	public KBComment toEscapedModel();
+	public com.liferay.knowledgebase.model.KBComment toEscapedModel();
 
 	@Override
-	public KBComment toUnescapedModel();
+	public com.liferay.knowledgebase.model.KBComment toUnescapedModel();
 
 	@Override
 	public String toString();

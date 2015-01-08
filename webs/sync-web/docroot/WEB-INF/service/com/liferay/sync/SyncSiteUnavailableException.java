@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,14 +11,29 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/admin/init.jsp" %>
+package com.liferay.sync;
 
-<%
-String emptyResultsMessage = "no-new-feedback-was-found";
-int feedbackStatus = KBCommentConstants.STATUS_NEW;
-String navItem = "viewNewFeedback";
-%>
+import com.liferay.portal.kernel.exception.PortalException;
 
-<%@ include file="/admin/view_feedback_in_state.jspf" %>
+/**
+ * @author Brian Wing Shun Chan
+ */
+public class SyncSiteUnavailableException extends PortalException {
+
+	public SyncSiteUnavailableException() {
+	}
+
+	public SyncSiteUnavailableException(String msg) {
+		super(msg);
+	}
+
+	public SyncSiteUnavailableException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public SyncSiteUnavailableException(Throwable cause) {
+		super(cause);
+	}
+
+}
