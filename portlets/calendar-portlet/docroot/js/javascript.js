@@ -84,6 +84,17 @@ AUI.add(
 
 		Liferay.Time = Time;
 
+		A.mix(A.DataType.DateMath, {
+			getWeeksInMonth: function(date) {
+				var daysInMonth = DateMath.getDaysInMonth(date.getFullYear(), date.getMonth());
+				var firstWeekDay = DateMath.getDate(date.getFullYear(), date.getMonth(), 1).getDay();
+				var daysInFirstWeek = DateMath.WEEK_LENGTH - firstWeekDay;
+
+				return Math.ceil((daysInMonth - daysInFirstWeek) / DateMath.WEEK_LENGTH) + 1;
+			},
+		});
+
+
 		var CalendarUtil = {
 			INVOKER_URL: themeDisplay.getPathContext() + '/api/jsonws/invoke',
 			NOTIFICATION_DEFAULT_TYPE: 'email',
@@ -1660,10 +1671,7 @@ AUI.add(
 					_uiSetDate: function(date) {
 						var instance = this;
 
-						var daysInMonth = DateMath.getDaysInMonth(date.getFullYear(), date.getMonth());
-						var firstWeekDay = DateMath.getDate(date.getFullYear(), date.getMonth(), 1).getDay();
-						var daysInFirstWeek = DateMath.WEEK_LENGTH - firstWeekDay;
-						var weeks = Math.ceil((daysInMonth - daysInFirstWeek) / DateMath.WEEK_LENGTH) + 1;
+						var weeks = DateMath.getWeeksInMonth(date);
 
 						A.each(
 							instance.tableRows,
@@ -1678,6 +1686,19 @@ AUI.add(
 						);
 
 						SchedulerMonthView.superclass._uiSetDate.apply(this, arguments);
+					},
+
+
+					_syncCellDimensions: function() {
+						var instance = this;
+
+						var scheduler = instance.get('scheduler');
+						var viewDate = scheduler.get('viewDate');
+						var weeks = DateMath.getWeeksInMonth(viewDate);
+
+						SchedulerMonthView.superclass._syncCellDimensions.apply(this, arguments);
+
+						instance.gridCellHeight = instance.rowsContainerNode.get('offsetHeight') / weeks;
 					}
 				}
 			}
