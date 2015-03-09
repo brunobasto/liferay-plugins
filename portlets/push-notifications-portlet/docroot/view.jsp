@@ -93,10 +93,10 @@ boolean appleSandbox = PrefsPropsUtil.getBoolean(PortletPropsKeys.APPLE_SANDBOX,
 				{
 					payload: A.JSON.stringify(
 						{
-							message: message
+							body: message
 						}
 					),
-					toUserId: 0
+					toUserIds: []
 				},
 				<portlet:namespace />onSendPushNotification
 			);

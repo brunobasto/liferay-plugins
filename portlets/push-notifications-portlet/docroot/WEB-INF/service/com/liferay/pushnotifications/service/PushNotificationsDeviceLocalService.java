@@ -232,12 +232,13 @@ public interface PushNotificationsDeviceLocalService extends BaseLocalService,
 
 	public void resetPushNotificationSenders();
 
-	public void sendPushNotification(
-		com.liferay.portal.kernel.json.JSONObject jsonObject)
+	public void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public void sendPushNotification(long toUserId,
-		com.liferay.portal.kernel.json.JSONObject jsonObject)
+	public void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**

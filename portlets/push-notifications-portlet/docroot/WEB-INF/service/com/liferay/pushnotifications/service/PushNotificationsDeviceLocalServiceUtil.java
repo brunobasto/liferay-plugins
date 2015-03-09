@@ -262,16 +262,17 @@ public class PushNotificationsDeviceLocalServiceUtil {
 		getService().resetPushNotificationSenders();
 	}
 
-	public static void sendPushNotification(
-		com.liferay.portal.kernel.json.JSONObject jsonObject)
+	public static void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(jsonObject);
+		getService().sendPushNotification(platform, tokens, payloadJSONObject);
 	}
 
-	public static void sendPushNotification(long toUserId,
-		com.liferay.portal.kernel.json.JSONObject jsonObject)
+	public static void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(toUserId, jsonObject);
+		getService().sendPushNotification(toUserIds, payloadJSONObject);
 	}
 
 	/**

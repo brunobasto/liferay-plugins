@@ -136,13 +136,14 @@ public class PushNotificationsDeviceLocalServiceClp
 		_methodName22 = "sendPushNotification";
 
 		_methodParameterTypes22 = new String[] {
+				"java.lang.String", "java.util.List",
 				"com.liferay.portal.kernel.json.JSONObject"
 			};
 
 		_methodName23 = "sendPushNotification";
 
 		_methodParameterTypes23 = new String[] {
-				"long", "com.liferay.portal.kernel.json.JSONObject"
+				"long[][]", "com.liferay.portal.kernel.json.JSONObject"
 			};
 
 		_methodName24 = "setBeanIdentifier";
@@ -731,13 +732,20 @@ public class PushNotificationsDeviceLocalServiceClp
 	}
 
 	@Override
-	public void sendPushNotification(
-		com.liferay.portal.kernel.json.JSONObject jsonObject)
+	public void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName22,
 				_methodParameterTypes22,
-				new Object[] { ClpSerializer.translateInput(jsonObject) });
+				new Object[] {
+					ClpSerializer.translateInput(platform),
+					
+				ClpSerializer.translateInput(tokens),
+					
+				ClpSerializer.translateInput(payloadJSONObject)
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -757,14 +765,17 @@ public class PushNotificationsDeviceLocalServiceClp
 	}
 
 	@Override
-	public void sendPushNotification(long toUserId,
-		com.liferay.portal.kernel.json.JSONObject jsonObject)
+	public void sendPushNotification(long[] toUserIds,
+		com.liferay.portal.kernel.json.JSONObject payloadJSONObject)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName23,
 				_methodParameterTypes23,
-				new Object[] { toUserId, ClpSerializer.translateInput(
-						jsonObject) });
+				new Object[] {
+					ClpSerializer.translateInput(toUserIds),
+					
+				ClpSerializer.translateInput(payloadJSONObject)
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

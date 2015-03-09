@@ -41,7 +41,8 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 	}
 
 	@Override
-	public void send(List<String> tokens, JSONObject jsonObject)
+	public void send(
+			String platform, List<String> tokens, JSONObject jsonObject)
 		throws Exception {
 
 		Sender sender = getSender();
@@ -59,15 +60,15 @@ public class AndroidPushNotificationsSender implements PushNotificationsSender {
 		sender.send(message, tokens, retries);
 	}
 
-	protected Message buildMessage(JSONObject jsonObject) {
+	protected Message buildMessage(JSONObject payloadJSONObject) {
 		Builder builder = new Builder();
 
-		Iterator<String> keys = jsonObject.keys();
+		Iterator<String> keys = payloadJSONObject.keys();
 
 		while (keys.hasNext()) {
 			String key = keys.next();
 
-			builder.addData(key, jsonObject.getString(key));
+			builder.addData(key, payloadJSONObject.getString(key));
 		}
 
 		return builder.build();

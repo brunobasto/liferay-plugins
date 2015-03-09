@@ -144,13 +144,14 @@ public class PushNotificationsDeviceLocalServiceClpInvoker {
 		_methodName52 = "sendPushNotification";
 
 		_methodParameterTypes52 = new String[] {
-				"com.liferay.portal.kernel.json.JSONObject"
+				"long[][]", "com.liferay.portal.kernel.json.JSONObject"
 			};
 
 		_methodName53 = "sendPushNotification";
 
 		_methodParameterTypes53 = new String[] {
-				"long", "com.liferay.portal.kernel.json.JSONObject"
+				"java.lang.String", "java.util.List",
+				"com.liferay.portal.kernel.json.JSONObject"
 			};
 	}
 
@@ -285,15 +286,17 @@ public class PushNotificationsDeviceLocalServiceClpInvoker {
 
 		if (_methodName52.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
-			PushNotificationsDeviceLocalServiceUtil.sendPushNotification((com.liferay.portal.kernel.json.JSONObject)arguments[0]);
+			PushNotificationsDeviceLocalServiceUtil.sendPushNotification((long[])arguments[0],
+				(com.liferay.portal.kernel.json.JSONObject)arguments[1]);
 
 			return null;
 		}
 
 		if (_methodName53.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
-			PushNotificationsDeviceLocalServiceUtil.sendPushNotification(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.kernel.json.JSONObject)arguments[1]);
+			PushNotificationsDeviceLocalServiceUtil.sendPushNotification((java.lang.String)arguments[0],
+				(java.util.List<java.lang.String>)arguments[1],
+				(com.liferay.portal.kernel.json.JSONObject)arguments[2]);
 
 			return null;
 		}

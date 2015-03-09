@@ -17,6 +17,8 @@
 
 package com.liferay.so.util;
 
+import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.breadcrumb.web.constants.BreadcrumbPortletKeys;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -148,16 +150,18 @@ public class LayoutUtil {
 				configureProfile(layout, portletId);
 				removePortletBorder(layout, portletId);
 			}
-			else if (portletId.startsWith(PortletKeys.ASSET_PUBLISHER)) {
+			else if (portletId.startsWith(
+						AssetPublisherPortletKeys.ASSET_PUBLISHER)) {
+
 				configureAssetPublisher(layout);
 				updatePortletTitle(layout, portletId, "related-content");
+			}
+			else if (portletId.startsWith(BreadcrumbPortletKeys.BREADCRUMB)) {
+				removePortletBorder(layout, portletId);
 			}
 			else if (portletId.startsWith(PortletKeys.BLOGS_AGGREGATOR)) {
 				configureBlogsAggregator(layout);
 				updatePortletTitle(layout, portletId, "recent-blogs");
-			}
-			else if (portletId.startsWith(PortletKeys.BREADCRUMB)) {
-				removePortletBorder(layout, portletId);
 			}
 			else if (portletId.startsWith(PortletKeys.MESSAGE_BOARDS)) {
 				configureMessageBoards(layout);

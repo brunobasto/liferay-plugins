@@ -68,10 +68,16 @@ public class PushNotificationsDeviceServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	public static void sendPushNotification(long toUserId,
+	public static void sendPushNotification(java.lang.String platform,
+		java.util.List<java.lang.String> tokens, java.lang.String payload)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().sendPushNotification(platform, tokens, payload);
+	}
+
+	public static void sendPushNotification(long[] toUserIds,
 		java.lang.String payload)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().sendPushNotification(toUserId, payload);
+		getService().sendPushNotification(toUserIds, payload);
 	}
 
 	/**

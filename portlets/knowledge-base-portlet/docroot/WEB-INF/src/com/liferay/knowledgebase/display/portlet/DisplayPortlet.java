@@ -240,7 +240,7 @@ public class DisplayPortlet extends BaseKBPortlet {
 			List<KBArticle> kbArticles =
 				KBArticleLocalServiceUtil.getKBArticles(
 					groupId, newKBFolderId, WorkflowConstants.STATUS_APPROVED,
-					0, 1, new KBArticlePriorityComparator());
+					0, 1, new KBArticlePriorityComparator(true));
 
 			if (!kbArticles.isEmpty()) {
 				kbArticle = kbArticles.get(0);
@@ -252,6 +252,16 @@ public class DisplayPortlet extends BaseKBPortlet {
 
 	protected KBArticle getKBArticle(RenderRequest renderRequest)
 		throws PortalException {
+
+		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
+
+		if (mvcPath.endsWith("/edit_article.jsp")) {
+			long resourcePrimKey = ParamUtil.getLong(
+				renderRequest, "resourcePrimKey");
+
+			return KBArticleLocalServiceUtil.getLatestKBArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY);
+		}
 
 		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
