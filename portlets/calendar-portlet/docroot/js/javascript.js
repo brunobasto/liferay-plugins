@@ -2092,7 +2092,7 @@ AUI.add(
 								dialog: {
 									after: {
 										destroy: function(event) {
-											scheduler.load();
+											schedulerEvent.syncWithServer();
 										}
 									},
 									destroyOnHide: true,
