@@ -863,6 +863,15 @@ AUI.add(
 						}
 					}
 				);
+			},
+
+			updateSchedulerEvents: function(schedulerEvents, calendarBooking) {
+				A.each(
+					schedulerEvents,
+					function(schedulerEvent) {
+						schedulerEvent.set('status', calendarBooking.status);
+					}
+				);
 			}
 		};
 
@@ -1073,6 +1082,19 @@ AUI.add(
 						Liferay.SchedulerEvent.superclass.syncUI.apply(instance, arguments);
 
 						instance._uiSetStatus(instance.get('status'));
+					},
+
+					syncWithServer: function() {
+						var instance = this;
+
+						var calendarBookingId = instance.get('calendarBookingId');
+						var scheduler = instance.get('scheduler');
+						var schedulerEvents = scheduler.getEventsByCalendarBookingId(calendarBookingId);
+
+						CalendarUtil.getEvent(
+							calendarBookingId,
+							A.bind(CalendarUtil.updateSchedulerEvents, CalendarUtil, schedulerEvents)
+						);
 					},
 
 					_onLoadingChange: function(event) {
@@ -1382,6 +1404,16 @@ AUI.add(
 						);
 
 						Scheduler.superclass.bindUI.apply(this, arguments);
+					},
+
+					getEventsByCalendarBookingId: function(calendarBookingId) {
+						var instance = this;
+
+						return instance.getEvents(
+							function(schedulerEvent) {
+								return schedulerEvent.get('calendarBookingId') === calendarBookingId;
+							}
+						);
 					},
 
 					load: function() {
@@ -2060,7 +2092,7 @@ AUI.add(
 								dialog: {
 									after: {
 										destroy: function(event) {
-											scheduler.load();
+											schedulerEvent.syncWithServer();
 										}
 									},
 									destroyOnHide: true,
