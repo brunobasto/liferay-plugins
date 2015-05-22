@@ -54,7 +54,7 @@
 						}
 					);
 
-					return (found && found.fn);
+					return found && found.fn;
 				}
 			);
 
@@ -243,7 +243,7 @@
 									function(item, index) {
 										var id = item.attr('data-id');
 
-										item.toggleClass(CSS_SIMPLE_MENU_ITEM_HIDDEN, (AArray.indexOf(val, id) > -1));
+										item.toggleClass(CSS_SIMPLE_MENU_ITEM_HIDDEN, AArray.indexOf(val, id) > -1);
 									}
 								);
 							}
@@ -516,7 +516,7 @@
 								simpleMenu.setAttrs(
 									{
 										alignNode: target,
-										visible: ((simpleMenu.get('align.node') !== target) || !simpleMenu.get('visible'))
+										visible: simpleMenu.get('align.node') !== target || !simpleMenu.get('visible')
 									}
 								);
 							}
@@ -937,7 +937,7 @@
 					var hours = date.getHours();
 					var minutes = date.getMinutes();
 
-					var amPm = (hours < 12) ? 0 : 1;
+					var amPm = hours < 12 ? 0 : 1;
 
 					if (amPm === 1) {
 						hours -= 12;
@@ -970,12 +970,12 @@
 
 							var value = toInt(currentTarget.val());
 
-							if ((selectedSetter === 3) && (date.getHours() > 12)) {
+							if (selectedSetter === 3 && date.getHours() > 12) {
 								value += 12;
 							}
 
 							if (selectedSetter === 5) {
-								value = date.getHours() + ((value === 1) ? 12 : -12);
+								value = date.getHours() + (value === 1 ? 12 : -12);
 							}
 
 							setters[selectedSetter].call(date, value);
@@ -1070,14 +1070,14 @@
 						position = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
 						weekDay = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
 					}
-					else if ((recurrence.frequency == instance.FREQUENCY.WEEKLY) && (recurrence.weekdays.length > 0)) {
+					else if (recurrence.frequency == instance.FREQUENCY.WEEKLY && recurrence.weekdays.length > 0) {
 						template.push(STR_SPACE, TPL_SPAN, Liferay.Language.get('on'), TPL_SPAN_CLOSE, ' {weekDays}');
 					}
 
-					if (recurrence.count && (recurrence.endValue === 'after')) {
+					if (recurrence.count && recurrence.endValue === 'after') {
 						template.push(', {count} ', Liferay.Language.get('times'));
 					}
-					else if (recurrence.untilDate && (recurrence.endValue === 'on')) {
+					else if (recurrence.untilDate && recurrence.endValue === 'on') {
 						var untilDate = recurrence.untilDate;
 
 						template.push(
@@ -1454,7 +1454,7 @@
 									function() {
 										instance._setEndDate();
 
-										if (instance._validDate && (instance._startDate.valueOf() >= instance._endDate.valueOf())) {
+										if (instance._validDate && instance._startDate.valueOf() >= instance._endDate.valueOf()) {
 											instance._startDate = new Date(instance._endDate.valueOf() - instance._duration);
 
 											instance._setStartDatePickerDate();
@@ -1470,7 +1470,7 @@
 									function() {
 										instance._setEndTime();
 
-										if (instance._validDate && (instance._startDate.valueOf() >= instance._endDate.valueOf())) {
+										if (instance._validDate && instance._startDate.valueOf() >= instance._endDate.valueOf()) {
 											instance._startDate = new Date(instance._endDate.valueOf() - instance._duration);
 
 											instance._setStartDatePickerDate();
@@ -1535,7 +1535,7 @@
 							_setDuration: function() {
 								var instance = this;
 
-								instance._duration = (instance._endDate.valueOf() - instance._startDate.valueOf());
+								instance._duration = instance._endDate.valueOf() - instance._startDate.valueOf();
 							},
 
 							_setEndDate: function() {
@@ -1607,7 +1607,7 @@
 							_validate: function() {
 								var instance = this;
 
-								instance._validDate = (instance._duration > 0);
+								instance._validDate = instance._duration > 0;
 
 								var validDate = instance._validDate;
 
