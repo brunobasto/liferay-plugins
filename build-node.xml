@@ -6,11 +6,12 @@
 
 	<macrodef name="node-execute">
 		<attribute name="command"/>
+		<attribute default="" name="command.args"/>
 		<attribute default="${user.dir}" name="working.dir" />
 
-		<sequential>
-			<exec dir="@{working.dir}" executable="${basedir}/tools/node-v${nodejs.version}/bin/@{command}">
-				<arg line="${node.args}"/>
+		<sequential>		
+			<exec dir="@{working.dir}" executable="${sdk.dir}/tools/node-v${nodejs.version}/bin/@{command}" failonerror="true">
+				<arg line="@{command.args}"/>
 			</exec>
 		</sequential>
 	</macrodef>
