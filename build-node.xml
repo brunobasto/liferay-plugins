@@ -72,7 +72,7 @@ ${nodejs.url[osx64]}.
 
 		<if>
 			<not>
-				<available file="tools/node-v${nodejs.version}" />
+				<available file="${sdk.dir}/tools/node-v${nodejs.version}" />
 			</not>
 			<then>
 				<antelope:stringutil string="${nodejs.url}" property="nodejs.file.beginindex">
@@ -97,7 +97,7 @@ ${nodejs.url[osx64]}.
 					<contains string="${nodejs.file}" substring=".tar.gz" />
 					<then>
 						<exec executable="tar">
-							<arg line="xfz ${nodejs.file} -C tools"/>
+							<arg line="xfz ${nodejs.file} -C ${sdk.dir}/tools"/>
 						</exec>
 
 						<antelope:stringutil string="${nodejs.file}" property="nodejs.dir.endindex">
@@ -108,16 +108,16 @@ ${nodejs.url[osx64]}.
 							<antelope:substring endindex="${nodejs.dir.endindex}" />
 						</antelope:stringutil>
 
-						<delete dir="tools/node-v${nodejs.version}" />
+						<delete dir="${sdk.dir}/tools/node-v${nodejs.version}" />
 
-						<move file="tools/${nodejs.dir}" tofile="tools/node-v${nodejs.version}" />
+						<move file="${sdk.dir}/tools/${nodejs.dir}" tofile="${sdk.dir}/tools/node-v${nodejs.version}" />
 
-						<mkdir dir="tools/node-v${nodejs.version}/node_modules" />
+						<mkdir dir="${sdk.dir}/tools/node-v${nodejs.version}/node_modules" />
 
 						<delete file="${nodejs.file}" />
 					</then>
 					<else>
-						<move file="${nodejs.file}" todir="tools/node-v${nodejs.version}" />
+						<move file="${nodejs.file}" todir="${sdk.dir}/tools/node-v${nodejs.version}" />
 					</else>
 				</if>
 
@@ -130,7 +130,7 @@ ${nodejs.url[osx64]}.
 						/>
 
 						<unzip
-							dest="tools/node-v${nodejs.version}"
+							dest="${sdk.dir}/tools/node-v${nodejs.version}"
 							src="npm.zip"
 						/>
 
@@ -150,7 +150,7 @@ ${nodejs.url[osx64]}.
 	<target name="npm-execute" depends="download-node">
 		<node-execute
 			command="npm"
-			working.dir="tools/node-v${nodejs.version}"
+			working.dir="${sdk.dir}/tools/node-v${nodejs.version}"
 		/>
 	</target>
 </project>
